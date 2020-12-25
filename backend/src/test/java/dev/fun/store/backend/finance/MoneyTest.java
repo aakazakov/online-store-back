@@ -10,11 +10,8 @@ class MoneyTest {
 	@Test
 	@DisplayName("should convert money from double to long")
 	void checkConvertingFromDoubleToLong() {
-		Money money = new Money(198.95);
 		
-		assertNotNull(money);
-		
-		long actual = money.getValue();
+		long actual = Money.doubleToLong(198.95);
 		
 		assertEquals(19895, actual);
 		
@@ -23,11 +20,8 @@ class MoneyTest {
 	@Test
 	@DisplayName("should convert money from long to double")
 	void checkConvertingFromLongToDouble() {
-		Money money = new Money(19895L);
 		
-		assertNotNull(money);
-		
-		double actual = money.getDoubleValue();
+		double actual = Money.longToDouble(19895);
 		
 		assertEquals(198.95, actual);
 		
