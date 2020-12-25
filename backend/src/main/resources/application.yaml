@@ -1,0 +1,27 @@
+#logging:
+#  level:
+#    '[org.springframework.web]': DEBUG
+#    '[org.springframework.security]': DEBUG
+#    '[org.hibernate]': WARN
+#    '[org.apache.tomcat]': WARN
+
+server:
+  port: 9000
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/online_store_test_db
+    username: postgres
+    password: password
+  flyway:
+    baseline-on-migrate: true # tmp do nothing
+  jpa:
+    database: postgresql
+    properties:
+      '[hibernate.dialect]': org.hibernate.dialect.PostgreSQL94Dialect
+      '[hibernate.show_sql]': true
+      '[hibernate.hbm2ddl.auto]': create-drop # just for dev
