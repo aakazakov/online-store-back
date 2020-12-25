@@ -9,8 +9,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import dev.fun.store.backend.finance.Money;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
@@ -24,6 +26,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	@SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_NAME, allocationSize = 1)
 	@Column(name = "id")
+	@Setter(value = AccessLevel.PRIVATE)
 	private Long id;
 	
 	@Column(name = "title", nullable = false)
