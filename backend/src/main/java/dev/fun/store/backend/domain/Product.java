@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import dev.fun.store.backend.finance.Money;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "products")
 public class Product {
 	

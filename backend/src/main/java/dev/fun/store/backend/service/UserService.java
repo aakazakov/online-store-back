@@ -2,39 +2,39 @@ package dev.fun.store.backend.service;
 
 import java.util.List;
 
-import dev.fun.store.backend.domain.User;
+import dev.fun.store.backend.dto.UserDto;
 
 public interface UserService {
 	
 	/**
-	 * Returns the {@link User} by its id
+	 * Returns the user by its id
 	 * @param id {@code Long} user id
-	 * @return one {@link User}
+	 * @return one {@link UserDto}
 	 */
-	User getOne(Long id);
+	UserDto getOne(Long id);
 	
 	/**
-	 * Returns a {@code List} of all {@link User}s
-	 * @return all {@link User}s
+	 * Returns a list of all users
+	 * @return {@code List} of {@link UserDto}
 	 */
-	List<User> getAll();
+	List<UserDto> getAll();
 	
 	/**
 	 * Used if need the user to be saved in a repository (e.g. DB)
-	 * @param user {@link User} to save
-	 * @return saved {@link User}
+	 * @param dto user {@link UserDto} to save
+	 * @return saved user {@link UserDto}
 	 */
-	User save(User user);
+	UserDto save(UserDto dto);
 	
 	/**
-	 * Used to save the modified {@link User} to a repository (e.g. DB)
-	 * @param user modified {@link User}
-	 * @return saved {@link User}
+	 * Used to save the modified user to a repository (e.g. DB)
+	 * @param dto modified user {@link UserDto}
+	 * @return saved user {@link UserDto}
 	 */
-	User update(User user);
+	UserDto update(UserDto dto);
 	
 	/**
-	 * Delete the {@link User} by its id 
+	 * Delete the user by its id 
 	 * @param id {@code Long} user id
 	 */
 	void delete(Long id);

@@ -13,4 +13,9 @@ public class ProductDto {
 	private String title;
 	private Long cost;
 	
+	public ProductDto(String title, Long cost) {
+		this.title = title;
+		this.cost = cost;
+	}
+	
 }

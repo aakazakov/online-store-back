@@ -2,11 +2,15 @@ package dev.fun.store.backend.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.fun.store.backend.dao.UserRepository;
 import dev.fun.store.backend.domain.User;
+import dev.fun.store.backend.dto.UserDto;
+import dev.fun.store.backend.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -19,22 +23,25 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getOne(Long id) {
-		return userRepository.findById(id).orElse(new User());
+	public UserDto getOne(Long id) {
+		return UserMapper.MAPPER.fromUser(userRepository.findById(id).orElse(new User()));
 	}
 
 	@Override
-	public List<User> getAll() {
-		return userRepository.findAll();
+	public List<UserDto> getAll() {
+		return UserMapper.MAPPER.fromUserList(userRepository.findAll());
 	}
 
 	@Override
-	public User save(User user) {
-		return userRepository.save(user);
+	@Transactional
+	public UserDto save(UserDto dto) {
+		User user = UserMapper.MAPPER.toUser(dto);
+		return UserMapper.MAPPER.fromUser(userRepository.save(user));
 	}
 
 	@Override
-	public User update(User user) {
+	@Transactional
+	public UserDto update(UserDto dto) {
 		// TODO
 		return null;
 	}
