@@ -47,7 +47,7 @@ public class DataFiller implements CommandLineRunner {
 			Product product4 = new Product("product4", 400.0);
 			Product product5 = new Product("product5", 500.0);
 			Product product6 = new Product("product6", 600.0);
-			Product product7 = new Product("product7", 700.0);
+			Product product7 = new Product("product7", 700.95);
 			
 			productRepository.saveAll(Arrays.asList(product1, product2, product3, product4, product5, product6, product7));
 		}
