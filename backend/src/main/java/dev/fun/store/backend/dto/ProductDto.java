@@ -11,9 +11,9 @@ public class ProductDto {
 	
 	private Long id;
 	private String title;
-	private Long cost;
+	private Double cost;
 	
-	public ProductDto(String title, Long cost) {
+	public ProductDto(String title, Double cost) {
 		this.title = title;
 		this.cost = cost;
 	}
