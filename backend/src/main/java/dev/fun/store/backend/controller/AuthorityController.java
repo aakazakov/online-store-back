@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.fun.store.backend.dto.AuthorityDto;
+import dev.fun.store.backend.dto.UserDto;
 import dev.fun.store.backend.service.AuthorityService;
 import dev.fun.store.backend.service.AuthorityServiceImpl;
 
@@ -32,6 +33,11 @@ public class AuthorityController {
 	@GetMapping(path = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public AuthorityDto getProduct(@PathVariable(name = "id") Long id) {
 		return authorityService.getOne(id);
+	}
+	
+	@GetMapping(path="/id/{id}/users", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<UserDto> getUsersByAuthorityId(@PathVariable(name = "id") Long id) {
+		return authorityService.getAllUsersByAuthority(id);
 	}
 	
 }
