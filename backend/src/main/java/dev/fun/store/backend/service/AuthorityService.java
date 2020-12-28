@@ -18,18 +18,5 @@ public interface AuthorityService {
 	 * @return all {@link AuthorityDto}s
 	 */
 	List<AuthorityDto> getAll();
-	
-	/**
-	 * Used if need the authority to be saved in a repository (e.g. DB)
-	 * @param dto authority {@link AuthorityDto} to save
-	 * @return saved {@link AuthorityDto}
-	 */
-	AuthorityDto save(AuthorityDto dto);
-	
-	/**
-	 * Delete the authority by its id
-	 * @param id {@code Long} product id
-	 */
-	void delete(Long id);
-	
+		
 }
