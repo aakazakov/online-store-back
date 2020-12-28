@@ -15,16 +15,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import dev.fun.store.backend.domain.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "authorities")
 public class Authority {
 
@@ -35,11 +31,9 @@ public class Authority {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
   @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_NAME, allocationSize = 1)
 	@Column(name = "id")
-	@Setter(value = AccessLevel.PRIVATE)
 	private Long id;
 	
 	@Column(name = "title", nullable = false)
-	@Setter(value = AccessLevel.PRIVATE) // As setter use setTitle(String title, boolean prefix);
 	private String title;
 
 	public Authority(Role title) {
@@ -51,7 +45,8 @@ public class Authority {
 	}
 	
 	/**
-	 * Sets title value;
+	 * Sets title value;<p>
+	 * <strong>It is preferable to use this method instead of setTitle(String title)</strong>
 	 * @param title {@code String} title value
 	 * @param prefix {@code true} if title is {@link Role} name, otherwise {@code false} 
 	 */

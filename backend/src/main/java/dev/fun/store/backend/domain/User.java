@@ -16,16 +16,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import dev.fun.store.backend.domain.authority.Authority;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "users")
 public class User {
 
@@ -35,8 +31,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	@SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_NAME, allocationSize = 1)
 	@Column(name = "id")
-	@Setter(value = AccessLevel.PRIVATE)
-	private long id;
+	private Long id;
 	
 	@Column(name = "login", nullable = false)
 	private String login;
