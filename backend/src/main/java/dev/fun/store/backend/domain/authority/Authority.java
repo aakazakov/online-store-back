@@ -1,13 +1,20 @@
 package dev.fun.store.backend.domain.authority;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import dev.fun.store.backend.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,5 +62,12 @@ public class Authority {
 			this.title = title;
 		}
 	}
+	
+  @ManyToMany
+  @JoinTable(
+  		name = "users_authorities",
+  		joinColumns = @JoinColumn(name = "authority_id"),
+  		inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> users = new ArrayList<>();
 
 }
