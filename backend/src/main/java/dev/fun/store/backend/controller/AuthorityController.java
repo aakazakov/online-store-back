@@ -37,7 +37,12 @@ public class AuthorityController {
 	
 	@GetMapping(path="/id/{id}/users", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<UserDto> getUsersByAuthorityId(@PathVariable(name = "id") Long id) {
-		return authorityService.getAllUsersByAuthority(id);
+		return authorityService.getAllUsersByAuthorityId(id);
 	}
 	
+	@GetMapping(path="/all/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<AuthorityDto> getAllAuthoritiesByUserId(@PathVariable(name = "id") Long id) {
+		return authorityService.getAllAuthoritiesByUserId(id);
+	}
+ 	
 }

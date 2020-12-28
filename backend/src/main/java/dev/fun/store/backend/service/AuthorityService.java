@@ -25,6 +25,8 @@ public interface AuthorityService {
 	 * @param id {@code Long} authority id
 	 * @return {@code List} of {@link UserDto}
 	 */
-	List<UserDto> getAllUsersByAuthority(Long id);
+	List<UserDto> getAllUsersByAuthorityId(Long id);
+	
+	List<AuthorityDto> getAllAuthoritiesByUserId(Long id);
 		
 }
