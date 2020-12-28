@@ -109,6 +109,27 @@ public class DataFiller implements CommandLineRunner {
 			userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5));
 		}
 		
+		// products_categories
+		{
+			Category category1 = categoryRepository.findById(1L).orElse(null);
+			Category category2 = categoryRepository.findById(2L).orElse(null);
+			Category category3 = categoryRepository.findById(3L).orElse(null);
+			
+			Product product1 = productRepository.findById(1L).orElse(null);
+			Product product2 = productRepository.findById(2L).orElse(null);
+			Product product3 = productRepository.findById(3L).orElse(null);
+			Product product4 = productRepository.findById(4L).orElse(null);
+			Product product5 = productRepository.findById(5L).orElse(null);
+			Product product6 = productRepository.findById(6L).orElse(null);
+			Product product7 = productRepository.findById(7L).orElse(null);
+			
+			category1.getProducts().addAll(Arrays.asList(product1, product2, product3, product4));
+			category2.getProducts().addAll(Arrays.asList(product5, product6));
+			category3.getProducts().add(product7);
+			
+			categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
+		}
+		
 	}
 	
 }
