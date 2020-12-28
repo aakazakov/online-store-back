@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import dev.fun.store.backend.dao.AuthorityRepository;
 import dev.fun.store.backend.dao.ProductRepository;
 import dev.fun.store.backend.dao.UserRepository;
 import dev.fun.store.backend.domain.Product;
 import dev.fun.store.backend.domain.User;
+import dev.fun.store.backend.domain.authority.Auth;
+import dev.fun.store.backend.domain.authority.Authority;
+import dev.fun.store.backend.domain.authority.Role;
 
 
 /**
@@ -26,7 +30,10 @@ public class DataFiller implements CommandLineRunner {
 	
 	@Autowired
 	ProductRepository productRepository;
-
+	
+	@Autowired
+	AuthorityRepository authorityRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -50,6 +57,16 @@ public class DataFiller implements CommandLineRunner {
 			Product product7 = new Product("product7", 700.95);
 			
 			productRepository.saveAll(Arrays.asList(product1, product2, product3, product4, product5, product6, product7));
+		}
+		
+		{
+			Authority anonimous = new Authority(Role.ANONYMOUS);
+			Authority admin = new Authority(Role.ADMIN);
+			Authority manager = new Authority(Role.MANAGER);
+			Authority client = new Authority(Role.CLIENT);
+			Authority addComment = new Authority(Auth.ADD_COMMENTS);
+			
+			authorityRepository.saveAll(Arrays.asList(anonimous, admin, manager, client, addComment));
 		}
 		
 	}
