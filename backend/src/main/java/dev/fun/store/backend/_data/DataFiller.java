@@ -100,11 +100,11 @@ public class DataFiller implements CommandLineRunner {
 			User user4 = userRepository.findById(4L).orElse(null);
 			User user5 = userRepository.findById(5L).orElse(null);
 			
-			user1.getAuthorities().add(admin);
-			user2.getAuthorities().add(manager);
-			user3.getAuthorities().addAll(Arrays.asList(client, addComment));
-			user4.getAuthorities().addAll(Arrays.asList(client, addComment));
-			user5.getAuthorities().addAll(Arrays.asList(client, addComment));
+			user1.setAuthorities(Arrays.asList(admin));
+			user2.setAuthorities(Arrays.asList(manager));
+			user3.setAuthorities(Arrays.asList(client, addComment));
+			user4.setAuthorities(Arrays.asList(client, addComment));
+			user5.setAuthorities(Arrays.asList(client, addComment));
 			
 			userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5));
 		}
@@ -123,9 +123,9 @@ public class DataFiller implements CommandLineRunner {
 			Product product6 = productRepository.findById(6L).orElse(null);
 			Product product7 = productRepository.findById(7L).orElse(null);
 			
-			category1.getProducts().addAll(Arrays.asList(product1, product2, product3, product4));
-			category2.getProducts().addAll(Arrays.asList(product5, product6));
-			category3.getProducts().add(product7);
+			category1.setProducts(Arrays.asList(product1, product2, product3, product4));
+			category2.setProducts(Arrays.asList(product5, product6));
+			category3.setProducts(Arrays.asList(product7));
 			
 			categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
 		}
