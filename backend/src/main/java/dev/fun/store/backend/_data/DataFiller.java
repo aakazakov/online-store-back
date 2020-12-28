@@ -7,8 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import dev.fun.store.backend.dao.AuthorityRepository;
+import dev.fun.store.backend.dao.CategoryRepository;
 import dev.fun.store.backend.dao.ProductRepository;
 import dev.fun.store.backend.dao.UserRepository;
+import dev.fun.store.backend.domain.Category;
 import dev.fun.store.backend.domain.Product;
 import dev.fun.store.backend.domain.User;
 import dev.fun.store.backend.domain.authority.Auth;
@@ -33,6 +35,9 @@ public class DataFiller implements CommandLineRunner {
 	
 	@Autowired
 	AuthorityRepository authorityRepository;
+	
+	@Autowired
+	CategoryRepository categoryRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -70,6 +75,16 @@ public class DataFiller implements CommandLineRunner {
 			Authority anonimous = new Authority(Role.ANONYMOUS);
 			
 			authorityRepository.saveAll(Arrays.asList(admin, manager, client, addComment, anonimous));
+		}
+		
+		
+		//categories
+		{
+			Category category1 = new Category("category1");
+			Category category2 = new Category("category3");
+			Category category3 = new Category("category3");
+			
+			categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
 		}
 		
 		// users_authorities
