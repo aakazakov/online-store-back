@@ -69,7 +69,7 @@ public class DataFiller implements CommandLineRunner {
 			Authority addComment = new Authority(Auth.ADD_COMMENTS);
 			Authority anonimous = new Authority(Role.ANONYMOUS);
 			
-			authorityRepository.saveAll(Arrays.asList(anonimous, admin, manager, client, addComment));
+			authorityRepository.saveAll(Arrays.asList(admin, manager, client, addComment, anonimous));
 		}
 		
 		// users_authorities
