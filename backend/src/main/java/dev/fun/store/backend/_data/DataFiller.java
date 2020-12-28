@@ -81,7 +81,7 @@ public class DataFiller implements CommandLineRunner {
 		//categories
 		{
 			Category category1 = new Category("category1");
-			Category category2 = new Category("category3");
+			Category category2 = new Category("category2");
 			Category category3 = new Category("category3");
 			
 			categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
