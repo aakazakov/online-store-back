@@ -37,7 +37,7 @@ public class AuthorityServiceImpl implements AuthorityService{
 
 	@Override
 	public List<UserDto> getAllUsersByAuthority(Long id) {
-		return UserMapper.MAPPER.fromUserList(userRepository.getAllUsersWhereAuthorityId(id));
+		return UserMapper.MAPPER.fromUserList(userRepository.findUsersByAuthorityId(id));
 	}
 
 }

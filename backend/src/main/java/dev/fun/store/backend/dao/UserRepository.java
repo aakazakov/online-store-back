@@ -20,6 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 						+ "JOIN users_authorities ua ON u.id=ua.user_id "
 						+ "WHERE ua.authority_id=?1",
 			nativeQuery = true)
-	List<User> getAllUsersWhereAuthorityId(Long id);
+	List<User> findUsersByAuthorityId(Long id);
 	
 }
