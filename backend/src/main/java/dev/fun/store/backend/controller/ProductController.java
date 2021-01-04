@@ -47,9 +47,14 @@ public class ProductController {
 		return productService.update(dto);
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping(path = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deleteProduct(@PathVariable(name = "id") Long id) {
 		productService.delete(id);
+	}
+	
+	@GetMapping(path = "/all/category/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<ProductDto> getAllProductsByCategory(@PathVariable(name = "id") Long categoryId) {
+		return productService.getProductsByCategory(categoryId);
 	}
 	
 }

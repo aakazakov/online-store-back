@@ -50,4 +50,9 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.deleteById(id);
 	}
 
+	@Override
+	public List<ProductDto> getProductsByCategory(Long categoryId) {
+		return ProductMapper.MAPPER.fromProductList(productRepository.findAllProductsByCategoryId(categoryId));
+	}
+
 }
