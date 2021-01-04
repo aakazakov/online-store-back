@@ -2,8 +2,6 @@ package dev.fun.store.backend.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -77,21 +75,19 @@ class CategoryControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
 
-	@Disabled // FIXME, please...
 	@Test
 	void testAddCategory() throws Exception {
-		CategoryDto c4 = new CategoryDto(); c4.setId(4L);
+		CategoryDto c4 = new CategoryDto(); c4.setTitle("c4"); c4.setId(4L);
 		
-		Mockito.when(categoryService.save(c4)).thenReturn(c4);
+		Mockito.when(categoryService.save(Mockito.any(CategoryDto.class))).thenReturn(c4);
 		
 		mockMvc
 			.perform(MockMvcRequestBuilders.post("/categories/add")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
-					.content(objectMapper.writeValueAsString(c4)))		
+					.content(objectMapper.writeValueAsString(c4))
+					.characterEncoding("utf-8"))
 			.andExpect(status().isOk())
-      .andDo(print())
-      .andExpect(jsonPath("$.id", Matchers.is(4)));
-		
+      .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(4)));
 	}
 
 	@Disabled
