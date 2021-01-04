@@ -1,6 +1,7 @@
 package dev.fun.store.backend.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.fun.store.backend.dto.ProductDto;
@@ -80,10 +82,19 @@ class ProductControllerTest {
 			.andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
 
-	@Disabled
 	@Test
-	void testAddProduct() {
-		fail("Not yet implemented");
+	void testAddProduct() throws JsonProcessingException, Exception {
+		ProductDto p6 = new ProductDto(); p6.setId(6L); p6.setTitle("p6"); p6.setCost(600L);
+		
+		Mockito.when(productService.save(Mockito.any(ProductDto.class))).thenReturn(p6);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.post("/products/add")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(objectMapper.writeValueAsString(p6))
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk())
+      .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(6)));
 	}
 
 	@Disabled
@@ -92,10 +103,15 @@ class ProductControllerTest {
 		fail("Not yet implemented");
 	}
 
-	@Disabled
 	@Test
-	void testDeleteProduct() {
-		fail("Not yet implemented");
+	void testDeleteProduct() throws Exception {
+		Long id = 1L;
+		mockMvc
+			.perform(MockMvcRequestBuilders.delete("/products/delete/{id}", id)
+					.accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk());
+		
+		verify(productService).delete(id);
 	}
 
 }
