@@ -106,5 +106,19 @@ class CategoryControllerTest {
 		
 		verify(categoryService).delete(id);
 	}
+	
+	@Test
+	void testGetAllCategoriesOfProduct() throws Exception {
+		Long id = 1L;
+		List<CategoryDto> catList = categorylist.subList(0, 2);
+		
+		Mockito.when(categoryService.getAllByProductId(id)).thenReturn(catList);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/categories/all/product/{id}", id)
+					.accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(catList.size())));
+	}
 
 }

@@ -97,5 +97,27 @@ class CategoryServiceImplTest {
 		
 		assertEquals(size - 1, catList.size());
 	}
+	
+	@Test
+	void testGetAllByProductId() {
+		Long id = 1L;
+		int index = 0;
+		
+		List<CategoryDto> categoryList = new ArrayList<>();
+		Category c = catList.get(index);
+		
+		CategoryDto dto = new CategoryDto();
+		dto.setId(c.getId());
+		dto.setTitle(c.getTitle());
+		
+		categoryList.add(dto);
+		
+		Mockito.when(categoryRepository.findAllByProductId(id)).thenReturn(catList.subList(index, index + 1));
+		
+		List<CategoryDto> actual = categoryService.getAllByProductId(id);
+		
+		assertNotNull(actual);
+		assertEquals(categoryList, actual);
+	}
 
 }

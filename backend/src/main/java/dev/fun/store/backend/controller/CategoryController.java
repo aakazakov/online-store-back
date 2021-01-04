@@ -52,4 +52,9 @@ public class CategoryController {
 		categoryService.delete(id);
 	}
 	
+	@GetMapping(path = "/all/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<CategoryDto> getAllCategoriesOfProduct(@PathVariable(name = "id") Long productId) {
+		return categoryService.getAllByProductId(productId);
+	}
+	
 }

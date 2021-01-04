@@ -39,4 +39,11 @@ public interface CategoryService {
 	 */
 	void delete(Long id);
 	
+	/**
+	 * Returns all categories of product
+	 * @param id product id
+	 * @return a list of {@link CategoryDto}
+	 */
+	List<CategoryDto> getAllByProductId(Long id);
+	
 }

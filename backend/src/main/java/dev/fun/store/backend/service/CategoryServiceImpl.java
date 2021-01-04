@@ -46,7 +46,12 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void delete(Long id) {
-		categoryRepository.deleteById(id);		
+		categoryRepository.deleteById(id);
+	}
+
+	@Override
+	public List<CategoryDto> getAllByProductId(Long id) {
+		return CategoryMapper.MAPPER.fromCategoryList(categoryRepository.findAllByProductId(id));
 	}
 
 }
