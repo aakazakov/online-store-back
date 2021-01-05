@@ -106,12 +106,27 @@ class ProductControllerTest {
 	@Test
 	void testDeleteProduct() throws Exception {
 		Long id = 1L;
+		
 		mockMvc
 			.perform(MockMvcRequestBuilders.delete("/products/delete/{id}", id)
 					.accept(MediaType.APPLICATION_JSON_VALUE))
 			.andExpect(status().isOk());
 		
 		verify(productService).delete(id);
+	}
+	
+	@Test
+	void testGetAllProductsByCategory() throws Exception {
+		Long id = 1L;
+		List<ProductDto> products = productList.subList(0, 3);
+		
+		Mockito.when(productService.getProductsByCategory(id)).thenReturn(products);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/products/all/category/{id}", id)
+					.accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(products.size())));
 	}
 
 }

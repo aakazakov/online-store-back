@@ -95,5 +95,20 @@ class ProductServiceImplTest {
 		
 		assertEquals(size - 1, prodList.size());
 	}
-
+	
+	@Test
+	void testGetProductsByCategory() {
+		List<Product> products = prodList.subList(0, 2);
+		Long id = 1L;
+		
+		Mockito.when(productRepository.findAllProductsByCategoryId(id)).thenReturn(products);
+		
+		List<ProductDto> actual = productService.getProductsByCategory(id);
+		
+		assertNotNull(actual);
+		assertEquals(products.size(), actual.size());
+		assertNotNull(actual.get(0));
+		assertNotNull(actual.get(1));
+	}
+	
 }
