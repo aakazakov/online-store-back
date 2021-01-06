@@ -17,7 +17,7 @@ import dev.fun.store.backend.service.UserService;
 import dev.fun.store.backend.service.UserServiceImpl;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
 	private UserService userService;
@@ -27,22 +27,22 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/all")
 	public List<UserDto> getAllUsers() {
 		return userService.getAll();
 	}
 	
-	@GetMapping(path = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/id/{id}")
 	public UserDto getUser(@PathVariable(name = "id") Long id) {
 		return userService.getOne(id);
 	}
 	
-	@PostMapping(path = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping("/add")
 	public UserDto addUser(UserDto dto) {
 		return userService.save(dto);
 	}
 	
-	@PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping("/update")
 	public UserDto updateUser(UserDto dto) {
 		return userService.update(dto);
 	}

@@ -15,7 +15,7 @@ import dev.fun.store.backend.service.AuthorityService;
 import dev.fun.store.backend.service.AuthorityServiceImpl;
 
 @RestController
-@RequestMapping("/authorities")
+@RequestMapping(path = "/authorities", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthorityController {
 	
 	private final AuthorityService authorityService;
@@ -25,22 +25,22 @@ public class AuthorityController {
 		this.authorityService = authorityService;
 	}
 	
-	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/all")
 	public List<AuthorityDto> getAllProducts() {
 		return authorityService.getAll();
 	}
 	
-	@GetMapping(path = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/id/{id}")
 	public AuthorityDto getProduct(@PathVariable(name = "id") Long id) {
 		return authorityService.getOne(id);
 	}
 	
-	@GetMapping(path="/id/{id}/users", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/id/{id}/users")
 	public List<UserDto> getUsersByAuthorityId(@PathVariable(name = "id") Long id) {
 		return authorityService.getAllUsersByAuthorityId(id);
 	}
 	
-	@GetMapping(path="/all/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/all/user/{id}")
 	public List<AuthorityDto> getAllAuthoritiesByUserId(@PathVariable(name = "id") Long id) {
 		return authorityService.getAllAuthoritiesByUserId(id);
 	}

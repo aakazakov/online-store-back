@@ -17,7 +17,7 @@ import dev.fun.store.backend.service.CategoryService;
 import dev.fun.store.backend.service.CategoryServiceImpl;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping(path = "/categories", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
 
 	private final CategoryService categoryService;
@@ -27,22 +27,22 @@ public class CategoryController {
 		this.categoryService = categoryService;
 	}
 	
-	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/all")
 	public List<CategoryDto> getAllCategories() {
 		return categoryService.getAll();
 	}
 	
-	@GetMapping(path = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/id/{id}")
 	public CategoryDto getCategory(@PathVariable(name = "id") Long id) {
 		return categoryService.getOne(id);
 	}
 	
-	@PostMapping(path = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping("/add")
 	public CategoryDto addCategory(CategoryDto dto) {
 		return categoryService.save(dto);
 	}
 	
-	@PutMapping(path = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping("/update")
 	public CategoryDto updateCategory(CategoryDto dto) {
 		return categoryService.update(dto);
 	}
@@ -52,7 +52,7 @@ public class CategoryController {
 		categoryService.delete(id);
 	}
 	
-	@GetMapping(path = "/all/product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping("/all/product/{id}")
 	public List<CategoryDto> getAllCategoriesOfProduct(@PathVariable(name = "id") Long productId) {
 		return categoryService.getAllByProductId(productId);
 	}
