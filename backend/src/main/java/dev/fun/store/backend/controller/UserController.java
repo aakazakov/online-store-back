@@ -37,9 +37,9 @@ public class UserController {
 		return userService.getOne(id);
 	}
 	
-	@PostMapping("/add")
-	public UserDto addUser(UserDto dto) {
-		return userService.save(dto);
+	@PostMapping("/add-client")
+	public UserDto addClient(UserDto dto) {
+		return userService.saveClient(dto);
 	}
 	
 	@PutMapping("/update")

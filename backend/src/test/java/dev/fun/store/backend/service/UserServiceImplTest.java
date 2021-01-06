@@ -1,5 +1,6 @@
 package dev.fun.store.backend.service;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -12,13 +13,18 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import dev.fun.store.backend.dao.AuthorityRepository;
 import dev.fun.store.backend.dao.UserRepository;
 import dev.fun.store.backend.domain.User;
+import dev.fun.store.backend.domain.authority.Auth;
+import dev.fun.store.backend.domain.authority.Authority;
+import dev.fun.store.backend.domain.authority.Role;
 import dev.fun.store.backend.dto.UserDto;
 
 class UserServiceImplTest {
 	
 	UserRepository userRepository;
+	AuthorityRepository authorityRepository;
 	UserServiceImpl userService;
 	
 	List<User> userList = new ArrayList<>();
@@ -26,7 +32,8 @@ class UserServiceImplTest {
 	@BeforeEach
 	void init() {
 		userRepository = Mockito.mock(UserRepository.class);
-		userService = new UserServiceImpl(userRepository);
+		authorityRepository = Mockito.mock(AuthorityRepository.class);
+		userService = new UserServiceImpl(userRepository, authorityRepository);
 		
 		User u1 = new User("login1", "pass1", true); u1.setId(1L);
 		User u2 = new User("login2", "pass2", true); u2.setId(2L);
@@ -54,10 +61,23 @@ class UserServiceImplTest {
 		assertEquals(userList.size(), actual.size());
 	}
 
-	@Disabled
 	@Test
-	void testSave() {
-		fail("Not yet implemented");
+	void testSaveClient() {
+		UserDto dto = new UserDto();
+		dto.setLogin("login");
+		dto.setPassword("pass");
+		User client = new User(dto.getLogin(), dto.getPassword(), true);
+		client.setId(1L);
+		List<Authority> auths =
+				new ArrayList<>(Arrays.asList(new Authority(Role.CLIENT), new Authority(Auth.ADD_COMMENTS)));
+		
+		Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(client);
+		Mockito.when(authorityRepository.findAllById(Mockito.anyIterable())).thenReturn(auths);
+		
+		UserDto actual = userService.saveClient(dto);
+		
+		assertNotNull(actual);
+		assertEquals(client.getId(), actual.getId());
 	}
 
 	@Disabled

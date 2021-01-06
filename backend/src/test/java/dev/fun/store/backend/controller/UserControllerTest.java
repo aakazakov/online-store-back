@@ -22,6 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dev.fun.store.backend.dto.UserDto;
 import dev.fun.store.backend.service.UserServiceImpl;
 
@@ -31,6 +34,9 @@ class UserControllerTest {
 
 	@Autowired
 	MockMvc mockMvc;
+	
+	@Autowired
+	ObjectMapper objectMapper;
 	
 	@MockBean
 	UserServiceImpl userService;
@@ -72,10 +78,19 @@ class UserControllerTest {
 			.andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
 
-	@Disabled
 	@Test
-	void testAddUser() {
-		fail("Not yet implemented");
+	void testAddClient() throws JsonProcessingException, Exception {
+		UserDto dto = userList.get(0);
+		
+		Mockito.when(userService.saveClient(Mockito.any(UserDto.class))).thenReturn(dto);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.post("/users/add-client")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(objectMapper.writeValueAsString(dto))
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk())
+	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
 
 	@Disabled

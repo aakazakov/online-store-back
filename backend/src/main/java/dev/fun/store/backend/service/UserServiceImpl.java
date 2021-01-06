@@ -1,5 +1,6 @@
 package dev.fun.store.backend.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,8 +8,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dev.fun.store.backend.dao.AuthorityRepository;
 import dev.fun.store.backend.dao.UserRepository;
 import dev.fun.store.backend.domain.User;
+import dev.fun.store.backend.domain.authority.Authority;
 import dev.fun.store.backend.dto.UserDto;
 import dev.fun.store.backend.mapper.UserMapper;
 
@@ -16,10 +19,12 @@ import dev.fun.store.backend.mapper.UserMapper;
 public class UserServiceImpl implements UserService{
 	
 	private final UserRepository userRepository;
+	private final AuthorityRepository authorityRepository;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository) {
 		this.userRepository = userRepository;
+		this.authorityRepository = authorityRepository;
 	}
 
 	@Override
@@ -34,8 +39,13 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
-	public UserDto save(UserDto dto) { // TODO: what about authority?
+	public UserDto saveClient(UserDto dto) {
 		User user = UserMapper.MAPPER.toUser(dto);
+		user.setEnabled(true);
+		user = userRepository.save(user);
+		// contains ROLE_CLIENT & ADD_COMMENTS
+		List<Authority> authList = authorityRepository.findAllById(Arrays.asList(3L, 4L));
+		user.setAuthorities(authList);
 		return UserMapper.MAPPER.fromUser(userRepository.save(user));
 	}
 

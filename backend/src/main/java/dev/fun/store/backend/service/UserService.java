@@ -20,11 +20,11 @@ public interface UserService {
 	List<UserDto> getAll();
 	
 	/**
-	 * Used if need the user to be saved in a repository (e.g. DB)
+	 * Used if need the user to be saved in a repository (e.g. DB) as a client
 	 * @param dto user {@link UserDto} to save
 	 * @return saved user {@link UserDto}
 	 */
-	UserDto save(UserDto dto);
+	UserDto saveClient(UserDto dto);
 	
 	/**
 	 * Used to save the modified user to a repository (e.g. DB)
