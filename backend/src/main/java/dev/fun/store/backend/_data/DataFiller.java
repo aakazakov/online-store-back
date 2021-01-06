@@ -22,7 +22,9 @@ import dev.fun.store.backend.domain.authority.Role;
  * Filling the database with fake entities.
  * <p>
  * If you want this to work, uncomment the annotation {@code @Component} and
- * it's {@code import}. If not, comment out. ))
+ * it's {@code import}. If not, comment out. &#128578
+ * <p>
+ * <i>ps: and don't forget to disable the 'flyway' plugin.<i>
  */
 @Component
 public class DataFiller implements CommandLineRunner {
