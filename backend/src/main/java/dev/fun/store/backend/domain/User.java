@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import dev.fun.store.backend.domain.authority.Authority;
 import lombok.Data;
@@ -51,7 +52,8 @@ public class User {
   @JoinTable(
   		name = "users_authorities",
   		joinColumns = @JoinColumn(name = "user_id"),
-  		inverseJoinColumns = @JoinColumn(name = "authority_id"))
+  		inverseJoinColumns = @JoinColumn(name = "authority_id"),
+  		uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "authority_id"}))
   private List<Authority> authorities = new ArrayList<>();
 	
 }
