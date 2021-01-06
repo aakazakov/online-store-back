@@ -27,23 +27,11 @@ class CategoryRepositoryTest {
 
 	@Test
 	void testFindAllByProductId() {
-		{
-			Product p1 = new Product("prod1", 100L);
-			
-			Category c1 = new Category("cat1");
-			Category c2 = new Category("cat2");
-			Category c3 = new Category("cat3");
-			
-			testEntityManager.persist(p1);
-			testEntityManager.persist(c1);
-			testEntityManager.persist(c2);
-			testEntityManager.persist(c3);
-		}
+		Product p1 = testEntityManager.persist(new Product("prod1", 100L));
+		Category c1 = testEntityManager.persist(new Category("cat1"));
+		Category c2 = testEntityManager.persist(new Category("cat2"));
+		Category c3 = testEntityManager.persist(new Category("cat3"));
 		
-		Product p1 = testEntityManager.find(Product.class, 1L);
-		Category c1 = testEntityManager.find(Category.class, 1L);
-		Category c2 = testEntityManager.find(Category.class, 2L);
-		Category c3 = testEntityManager.find(Category.class, 3L);
 		p1.setCategories(Arrays.asList(c1, c2));
 		testEntityManager.persistAndFlush(p1);
 		

@@ -29,22 +29,11 @@ class AuthorityRepositoryTest {
 
 	@Test
 	void testFindAuthoritiesByUserId() {
-		{
-			User testUser = new User("login", "pass", true);
-			
-			Authority testAuth1 = new Authority(Role.CLIENT);
-			Authority testAuth2 = new Authority(Auth.ADD_COMMENTS);
-			Authority testAuth3 = new Authority(Role.ADMIN);
-			
-			testEntityManager.persist(testUser);
-			testEntityManager.persist(testAuth1);
-			testEntityManager.persist(testAuth2);
-			testEntityManager.persist(testAuth3);
-		}
-		
-		User testUser = testEntityManager.find(User.class, 1L);
-		Authority testAuth1 = testEntityManager.find(Authority.class, 1L);
-		Authority testAuth2 = testEntityManager.find(Authority.class, 2L);
+		User testUser = testEntityManager.persist(new User("login", "pass", true));
+		Authority testAuth1 = testEntityManager.persist(new Authority(Role.CLIENT));
+		Authority testAuth2 = testEntityManager.persist(new Authority(Auth.ADD_COMMENTS));
+		testEntityManager.persist(new Authority(Role.ADMIN));
+
 		testUser.setAuthorities(Arrays.asList(testAuth1, testAuth2));
 		testEntityManager.persistAndFlush(testUser);
 		
@@ -53,7 +42,7 @@ class AuthorityRepositoryTest {
 		assertNotNull(actual);
 		assertEquals(2, actual.size());
 		assertTrue(actual.contains(testAuth1));
-		assertTrue(actual.contains(testAuth2));	
+		assertTrue(actual.contains(testAuth2));
 	}
 
 }
