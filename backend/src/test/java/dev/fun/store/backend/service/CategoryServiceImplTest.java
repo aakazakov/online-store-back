@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -76,10 +75,20 @@ class CategoryServiceImplTest {
 		assertEquals(4, catList.size());
 	}
 
-	@Disabled
 	@Test
 	void testUpdate() {
-		fail("Not yet implemented");
+		Category c = catList.get(0);
+		CategoryDto dto = new CategoryDto();
+		dto.setId(c.getId());
+		String newTitle = c.getTitle() + "@(^_^)@";
+		dto.setTitle(newTitle);
+		
+		Mockito.when(categoryRepository.getOne(c.getId())).thenReturn(c);
+		
+		CategoryDto actual = categoryService.update(dto);
+		
+		assertNotNull(actual);
+		assertEquals(newTitle, actual.getTitle());
 	}
 
 	@Test

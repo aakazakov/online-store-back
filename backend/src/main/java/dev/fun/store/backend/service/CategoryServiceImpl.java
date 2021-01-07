@@ -40,8 +40,17 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	@Transactional
 	public CategoryDto update(CategoryDto dto) {
-		// TODO
-		return null;
+		Long id = dto.getId();
+		String newTitle = dto.getTitle();
+		
+		if (id == null || newTitle == null)
+			return null;
+		
+		Category category = categoryRepository.getOne(id);
+		
+		category.setTitle(newTitle);
+		
+		return CategoryMapper.MAPPER.fromCategory(category);
 	}
 
 	@Override
