@@ -1,6 +1,5 @@
 package dev.fun.store.backend.service;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
