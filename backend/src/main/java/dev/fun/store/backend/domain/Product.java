@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import dev.fun.store.backend.finance.Money;
 import lombok.Data;
@@ -56,7 +57,8 @@ public class Product {
   @JoinTable(
       name = "products_categories",
       joinColumns = @JoinColumn(name = "product_id"),
-      inverseJoinColumns = @JoinColumn(name = "category_id"))
+      inverseJoinColumns = @JoinColumn(name = "category_id"),
+      uniqueConstraints = @UniqueConstraint(columnNames = {"product_id", "category_id"}))
   private List<Category> categories = new ArrayList<>();
 	
 }
