@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -74,10 +73,23 @@ class ProductServiceImplTest {
 		assertEquals(4, prodList.size());
 	}
 
-	@Disabled
 	@Test
 	void testUpdate() {
-		fail("Not yet implemented");
+		Product p = prodList.get(0);
+		ProductDto dto = new ProductDto();
+		dto.setId(p.getId());
+		dto.setTitle(p.getTitle());
+		dto.setCost(p.getCost() + 1L);
+		
+		Mockito.when(productRepository.getOne(p.getId())).thenReturn(p);
+		Mockito.when(productRepository.save(Mockito.any(Product.class))).then(invocation -> {
+			return invocation.getArgument(0);
+		});
+		
+		ProductDto actual = productService.update(dto);
+		
+		assertNotNull(actual);
+		assertEquals(dto.getCost(), actual.getCost());
 	}
 
 	@Test

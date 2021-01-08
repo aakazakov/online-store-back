@@ -1,6 +1,5 @@
 package dev.fun.store.backend.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -97,10 +95,21 @@ class ProductControllerTest {
       .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(6)));
 	}
 
-	@Disabled
 	@Test
-	void testUpdateProduct() {
-		fail("Not yet implemented");
+	void testUpdateProduct() throws JsonProcessingException, Exception {
+		ProductDto dto = productList.get(0);
+		dto.setCost(999L);
+		
+		Mockito.when(productService.update(Mockito.any(ProductDto.class))).thenReturn(dto);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.put("/products/update")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(objectMapper.writeValueAsString(dto))
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk())
+	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.cost", Matchers.is(999)));
 	}
 
 	@Test

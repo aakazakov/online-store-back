@@ -41,8 +41,23 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDto update(ProductDto dto) {
-		// TODO
-		return null;
+		Long id = dto.getId();
+		String newTitle = dto.getTitle();
+		Long newCost = dto.getCost();
+		
+		if (id == null)
+			return null;
+		
+		Product product = productRepository.getOne(id);
+		
+		if (newTitle != null)
+			product.setTitle(newTitle);
+		if (newCost != null)
+			product.setCost(newCost);
+		
+		System.out.println(product);
+		
+		return ProductMapper.MAPPER.fromProduct(productRepository.save(product));
 	}
 
 	@Override
