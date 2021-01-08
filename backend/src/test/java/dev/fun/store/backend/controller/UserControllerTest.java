@@ -1,6 +1,6 @@
 package dev.fun.store.backend.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -111,10 +110,16 @@ class UserControllerTest {
 			.andExpect(MockMvcResultMatchers.jsonPath("$.login", Matchers.is(dto.getLogin())));
 	}
 
-	@Disabled
 	@Test
-	void testDeleteUser() {
-		fail("Not yet implemented");
+	void testDeleteUser() throws Exception {
+		Long id = 1L;
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.delete("/users/delete/{id}", id)
+					.accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk());
+		
+		verify(userService).delete(id);
 	}
 
 }

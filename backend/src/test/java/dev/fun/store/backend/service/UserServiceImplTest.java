@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -104,10 +103,13 @@ class UserServiceImplTest {
 		assertEquals(dto.getLogin(), actual.getLogin());
 	}
 
-	@Disabled
 	@Test
 	void testDelete() {
-		fail("Not yet implemented");
+		Long id = 1L;
+		
+		userService.delete(id);
+		
+		Mockito.verify(userRepository).deleteById(id);
 	}
 
 }
