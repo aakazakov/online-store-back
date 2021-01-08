@@ -84,6 +84,9 @@ class CategoryServiceImplTest {
 		dto.setTitle(newTitle);
 		
 		Mockito.when(categoryRepository.getOne(c.getId())).thenReturn(c);
+		Mockito.when(categoryRepository.save(Mockito.any(Category.class))).then(invocation -> {
+			return invocation.getArgument(0);
+		});
 		
 		CategoryDto actual = categoryService.update(dto);
 		
