@@ -93,10 +93,22 @@ class UserControllerTest {
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
 
-	@Disabled
 	@Test
-	void testUpdateUser() {
-		fail("Not yet implemented");
+	void testUpdateUser() throws JsonProcessingException, Exception {
+		UserDto dto = userList.get(0);
+		dto.setLogin("<(^=^)>");
+		dto.setPassword("123");
+		
+		Mockito.when(userService.update(Mockito.any(UserDto.class))).thenReturn(dto);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.put("/users/update")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(objectMapper.writeValueAsString(dto))
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk())
+	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.login", Matchers.is(dto.getLogin())));
 	}
 
 	@Disabled

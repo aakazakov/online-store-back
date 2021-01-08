@@ -14,6 +14,7 @@ import dev.fun.store.backend.domain.User;
 import dev.fun.store.backend.domain.authority.Authority;
 import dev.fun.store.backend.dto.UserDto;
 import dev.fun.store.backend.mapper.UserMapper;
+import dev.fun.store.backend.mapper.UserMapperDecorator;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -52,8 +53,21 @@ public class UserServiceImpl implements UserService{
 	@Override
 	@Transactional
 	public UserDto update(UserDto dto) {
-		// TODO
-		return null;
+		Long id = dto.getId();
+		String newLogin = dto.getLogin();
+		String newPassword = dto.getPassword();
+		
+		if (id == null)
+			return null;
+		
+		User user = userRepository.getOne(id);
+		
+		if (newLogin != null)
+			user.setLogin(newLogin);
+		if (newPassword != null && !newPassword.equals(UserMapperDecorator.STUB))
+			user.setPassword(newPassword);
+		
+		return UserMapper.MAPPER.fromUser(userRepository.save(user));
 	}
 
 	@Override

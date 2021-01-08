@@ -79,10 +79,29 @@ class UserServiceImplTest {
 		assertEquals(client.getId(), actual.getId());
 	}
 
-	@Disabled
 	@Test
 	void testUpdate() {
-		fail("Not yet implemented");
+		User u = userList.get(0);
+		UserDto dto = new UserDto();
+		dto.setId(u.getId());
+		dto.setLogin("new_awesome_login_" + u.getLogin());
+		dto.setPassword("new_super_secure_pass_" + u.getPassword());
+		
+		Mockito.when(userRepository.getOne(u.getId())).thenReturn(u);
+		Mockito.when(userRepository.save(Mockito.any(User.class))).then(invocation -> {
+			User newUser = invocation.getArgument(0);
+			
+			assertEquals(dto.getPassword(), u.getPassword());
+			
+			return newUser;
+		});
+		
+		UserDto actual = userService.update(dto);
+		
+		System.out.println(actual);
+		
+		assertNotNull(actual);
+		assertEquals(dto.getLogin(), actual.getLogin());
 	}
 
 	@Disabled
