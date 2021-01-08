@@ -8,6 +8,8 @@ import dev.fun.store.backend.domain.User;
 import dev.fun.store.backend.dto.UserDto;
 
 public abstract class UserMapperDecorator implements UserMapper {
+	
+	public static final String STUB = "";
 
 	private UserMapper delegate;
 	
@@ -20,7 +22,7 @@ public abstract class UserMapperDecorator implements UserMapper {
 	@Override
 	public UserDto fromUser(User user) {
 		UserDto dto = delegate.fromUser(user);
-		dto.setPassword("");
+		dto.setPassword(STUB);
 		return dto;
 	}
 	
@@ -29,7 +31,7 @@ public abstract class UserMapperDecorator implements UserMapper {
 	public List<UserDto> fromUserList(List<User> userList) {
 		List<UserDto> dtoList = delegate.fromUserList(userList);
 		for (UserDto dto : dtoList) {
-			dto.setPassword("");
+			dto.setPassword(STUB);
 		}
 		return dtoList;
 	}

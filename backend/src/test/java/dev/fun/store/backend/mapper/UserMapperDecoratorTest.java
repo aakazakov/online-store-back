@@ -80,7 +80,7 @@ class UserMapperDecoratorTest {
 		UserDto actual = decorator.fromUser(user);
 		
 		assertNotNull(actual);
-		assertTrue(actual.getPassword().isEmpty());
+		assertEquals(UserMapperDecorator.STUB, actual.getPassword());
 	}
 
 	@Test
@@ -91,7 +91,7 @@ class UserMapperDecoratorTest {
 		
 		for (UserDto dto : actual) {
 			assertNotNull(dto);
-			assertTrue(dto.getPassword().isEmpty());
+			assertEquals(UserMapperDecorator.STUB, dto.getPassword());
 		}
 	}
 
