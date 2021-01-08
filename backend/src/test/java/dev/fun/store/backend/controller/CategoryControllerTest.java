@@ -103,7 +103,8 @@ class CategoryControllerTest {
 				.content(objectMapper.writeValueAsString(dto))
 				.characterEncoding("utf-8"))
 		.andExpect(status().isOk())
-    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
+    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is(dto.getTitle())));
 	}
 
 	@Test
