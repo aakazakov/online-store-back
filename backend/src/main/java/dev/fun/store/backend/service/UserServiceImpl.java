@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService{
 		Long id = dto.getId();
 		String newLogin = dto.getLogin();
 		String newPassword = dto.getPassword();
+		Boolean newEnabled = dto.getEnabled();
 		
 		if (id == null)
 			return null;
@@ -66,6 +67,8 @@ public class UserServiceImpl implements UserService{
 			user.setLogin(newLogin);
 		if (newPassword != null && !newPassword.equals(UserMapperDecorator.STUB))
 			user.setPassword(newPassword);
+		if (newEnabled == null)
+			user.setEnabled(newEnabled);
 		
 		return UserMapper.MAPPER.fromUser(userRepository.save(user));
 	}
