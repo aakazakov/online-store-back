@@ -43,12 +43,13 @@ public class CategoryServiceImpl implements CategoryService {
 		Long id = dto.getId();
 		String newTitle = dto.getTitle();
 		
-		if (id == null || newTitle == null)
+		if (id == null)
 			return null;
 		
 		Category category = categoryRepository.getOne(id);
 		
-		category.setTitle(newTitle);
+		if (newTitle != null)
+			category.setTitle(newTitle);
 		
 		return CategoryMapper.MAPPER.fromCategory(category);
 	}
