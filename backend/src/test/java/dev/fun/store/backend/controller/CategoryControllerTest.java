@@ -98,13 +98,13 @@ class CategoryControllerTest {
 		Mockito.when(categoryService.update(Mockito.any(CategoryDto.class))).thenReturn(dto);
 		
 		mockMvc
-		.perform(MockMvcRequestBuilders.put("/categories/update")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.content(objectMapper.writeValueAsString(dto))
-				.characterEncoding("utf-8"))
-		.andExpect(status().isOk())
-    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is(dto.getTitle())));
+			.perform(MockMvcRequestBuilders.put("/categories/update")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(objectMapper.writeValueAsString(dto))
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk())
+	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is(dto.getTitle())));
 	}
 
 	@Test
