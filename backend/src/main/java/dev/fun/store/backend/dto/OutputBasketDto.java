@@ -8,7 +8,7 @@ import lombok.Data;
 public class OutputBasketDto {
 
 	private List<BasketDetailDto> details;
-	private Long totalAmount;
+	private Integer totalAmount;
 	private Long totalCost;
 	
 }

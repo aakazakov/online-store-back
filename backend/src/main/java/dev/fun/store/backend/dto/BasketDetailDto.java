@@ -6,7 +6,7 @@ import lombok.Data;
 public class BasketDetailDto {
 
 	private ProductDto productDto;
-	private Long amount;
+	private Integer amount;
 	private Long totalCost;
 	
 }
