@@ -19,6 +19,7 @@ import dev.fun.store.backend.domain.authority.Auth;
 import dev.fun.store.backend.domain.authority.Authority;
 import dev.fun.store.backend.domain.authority.Role;
 import dev.fun.store.backend.dto.AuthorityDto;
+import dev.fun.store.backend.dto.SetAuthorityDto;
 import dev.fun.store.backend.dto.UserDto;
 
 class AuthorityServiceImplTest {
@@ -100,6 +101,31 @@ class AuthorityServiceImplTest {
 		
 		assertNotNull(actual);
 		assertEquals(auth.size(), actual.size());
+	}
+	
+	@Test
+	void testSetAuthorities() {
+		List<Authority> authorities = authList.subList(0, 1);
+		User user = userList.get(2);
+		
+		List<Long> authorityId = new ArrayList<>();
+		authorityId.add(authorities.get(0).getId());
+		SetAuthorityDto dto = new SetAuthorityDto();
+		dto.setUserId(1L);
+		dto.setAuthorityId(authorityId);
+		
+		Mockito.when(userRepository.getOne(Mockito.anyLong())).thenReturn(user);
+		Mockito.when(authorityRepository.findAllById(Mockito.anyIterable())).thenReturn(authorities);
+		
+		user.setAuthorities(authorities);
+		
+		Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
+		
+		List<AuthorityDto> actual = authorityService.setAuthorities(dto);
+		
+		assertNotNull(actual);
+		assertEquals(authorities.size(), actual.size());
+		assertEquals(authorities.get(0).getId(), actual.get(0).getId());
 	}
 
 }

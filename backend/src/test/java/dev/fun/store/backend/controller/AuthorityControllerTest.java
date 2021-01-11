@@ -20,9 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dev.fun.store.backend.domain.authority.Auth;
 import dev.fun.store.backend.domain.authority.Role;
 import dev.fun.store.backend.dto.AuthorityDto;
+import dev.fun.store.backend.dto.SetAuthorityDto;
 import dev.fun.store.backend.dto.UserDto;
 import dev.fun.store.backend.service.AuthorityServiceImpl;
 
@@ -32,6 +35,9 @@ class AuthorityControllerTest {
 	
 	@Autowired
 	MockMvc mockMvc;
+	
+	@Autowired
+	ObjectMapper objectMapper;
 	
 	@MockBean
 	AuthorityServiceImpl authorityService;
@@ -79,6 +85,7 @@ class AuthorityControllerTest {
 	@Test
 	void testGetUsersByAuthorityId() throws Exception {
 		Long id = 1L;
+		
 		Mockito.when(authorityService.getAllUsersByAuthorityId(id)).thenReturn(userList);
 		
 		mockMvc
@@ -91,12 +98,29 @@ class AuthorityControllerTest {
 	void testGetAllAuthoritiesByUserId() throws Exception {
 		Long id = 1L;
 		List<AuthorityDto> auths = authList.subList(2, 3);
+		
 		Mockito.when(authorityService.getAllAuthoritiesByUserId(id)).thenReturn(auths);
 		
 		mockMvc
 			.perform(MockMvcRequestBuilders.get("/authorities/all/user/{id}", id).accept(MediaType.APPLICATION_JSON_VALUE))
 			.andExpect(status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(auths.size())));
+	}
+	
+	@Test
+	void testSetAuthorities() throws Exception {
+		SetAuthorityDto dto = new SetAuthorityDto();
+		List<AuthorityDto> authorities = authList.subList(0, 1);
+		
+		Mockito.when(authorityService.setAuthorities(Mockito.any(SetAuthorityDto.class))).thenReturn(authorities);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.put("/authorities/set")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(objectMapper.writeValueAsString(dto))
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk())
+	    .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)));
 	}
 
 }
