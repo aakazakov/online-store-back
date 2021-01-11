@@ -3,6 +3,7 @@ package dev.fun.store.backend.service;
 import java.util.List;
 
 import dev.fun.store.backend.dto.AuthorityDto;
+import dev.fun.store.backend.dto.SetAuthorityDto;
 import dev.fun.store.backend.dto.UserDto;
 
 public interface AuthorityService {
@@ -28,5 +29,7 @@ public interface AuthorityService {
 	List<UserDto> getAllUsersByAuthorityId(Long id);
 	
 	List<AuthorityDto> getAllAuthoritiesByUserId(Long id);
+	
+	List<AuthorityDto> setAuthorities(SetAuthorityDto dto);
 		
 }
