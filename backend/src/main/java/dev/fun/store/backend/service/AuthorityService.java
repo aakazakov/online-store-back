@@ -28,8 +28,18 @@ public interface AuthorityService {
 	 */
 	List<UserDto> getAllUsersByAuthorityId(Long id);
 	
+	/**
+	 * Returns all user authorities
+	 * @param id {@code Long} user id
+	 * @return {@code List} of {@link AuthorityDto}
+	 */
 	List<AuthorityDto> getAllAuthoritiesByUserId(Long id);
 	
+	/**
+	 * Sets the actual list of authorities for the user
+	 * @param dto {@link SetAuthorityDto} contains {@code Long} userId and {@code List} of {@code Long} authorityId 
+	 * @return {@code List} of {@link AuthorityDto}
+	 */
 	List<AuthorityDto> setAuthorities(SetAuthorityDto dto);
 		
 }
