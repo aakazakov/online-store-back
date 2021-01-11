@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class BasketDto {
+public class OutputBasketDto {
 
 	private List<BasketDetailDto> details;
 	private Long totalAmount;
