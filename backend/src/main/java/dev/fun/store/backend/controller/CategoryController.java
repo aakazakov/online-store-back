@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,13 +38,13 @@ public class CategoryController {
 		return categoryService.getOne(id);
 	}
 	
-	@PostMapping("/add")
-	public CategoryDto addCategory(CategoryDto dto) {
+	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public CategoryDto addCategory(@RequestBody CategoryDto dto) {
 		return categoryService.save(dto);
 	}
 	
-	@PutMapping("/update")
-	public CategoryDto updateCategory(CategoryDto dto) {
+	@PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public CategoryDto updateCategory(@RequestBody CategoryDto dto) {
 		return categoryService.update(dto);
 	}
 	

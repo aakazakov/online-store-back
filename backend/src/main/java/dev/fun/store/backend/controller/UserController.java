@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,13 +38,13 @@ public class UserController {
 		return userService.getOne(id);
 	}
 	
-	@PostMapping("/add-client")
-	public UserDto addClient(UserDto dto) {
+	@PostMapping(path = "/add-client", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public UserDto addClient(@RequestBody UserDto dto) {
 		return userService.saveClient(dto);
 	}
 	
-	@PutMapping("/update")
-	public UserDto updateUser(UserDto dto) {
+	@PutMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public UserDto updateUser(@RequestBody UserDto dto) {
 		return userService.update(dto);
 	}
 	

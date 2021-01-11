@@ -48,7 +48,7 @@ public class AuthorityController {
 		return authorityService.getAllAuthoritiesByUserId(id);
 	}
 	
-	@PutMapping("/set")
+	@PutMapping(path = "/set", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<AuthorityDto> setAuthorities(@RequestBody SetAuthorityDto dto) {
 		return authorityService.setAuthorities(dto);
 	}
