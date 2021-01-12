@@ -2,6 +2,7 @@ package dev.fun.store.backend.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class BasketMapperImpl implements BasketMapper {
 	
 	@Override
 	public OutputBasketDto fromBasket(Basket basket) {
-		OutputBasketDto outputDto = new OutputBasketDto();
+		OutputBasketDto outputBasketDto = new OutputBasketDto();
 		List<BasketDetailDto> basketDetailDtoList = new ArrayList<>();
 		Integer totalAmount = 0;
 		Long totalCost = 0L;
@@ -22,15 +23,21 @@ public class BasketMapperImpl implements BasketMapper {
 		List<ProductDto> productDtoList = ProductMapper.MAPPER.fromProductList(basket.getProducts());
 		Map<ProductDto, Integer> productDtoMap = getProductDtoMap(productDtoList);
 		
-		productDtoMap.forEach((k, v) -> {
-			BasketDetailDto basketDetailDto = fromProductDtoToBasketDetailDto(k, v);
+		Iterator<Map.Entry<ProductDto, Integer>> iterator = productDtoMap.entrySet().iterator();		
+		while(iterator.hasNext()) {
+			Map.Entry<ProductDto, Integer> entry = iterator.next();
+			BasketDetailDto basketDetailDto = fromProductDtoToBasketDetailDto(entry.getKey(), entry.getValue());
+			totalAmount += basketDetailDto.getAmount();
+			totalCost += basketDetailDto.getTotalCost();
 			basketDetailDtoList.add(basketDetailDto);
-			
-			// FIXME increment coat & amount
-			
-		});
+		}
 		
-		return null;
+		outputBasketDto.setBasketId(basket.getId());
+		outputBasketDto.setDetails(basketDetailDtoList);
+		outputBasketDto.setTotalAmount(totalAmount);
+		outputBasketDto.setTotalCost(totalCost);
+		
+		return outputBasketDto;
 	}
 	
 	private Map<ProductDto, Integer> getProductDtoMap(List<ProductDto> list) {
