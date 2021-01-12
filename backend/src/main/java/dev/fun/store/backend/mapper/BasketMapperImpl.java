@@ -6,11 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import dev.fun.store.backend.domain.Basket;
 import dev.fun.store.backend.dto.BasketDetailDto;
 import dev.fun.store.backend.dto.OutputBasketDto;
 import dev.fun.store.backend.dto.ProductDto;
 
+@Component
 public class BasketMapperImpl implements BasketMapper {
 	
 	@Override
