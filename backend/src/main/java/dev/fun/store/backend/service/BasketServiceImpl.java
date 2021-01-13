@@ -56,4 +56,16 @@ public class BasketServiceImpl implements BasketService {
 		basketRepository.deleteById(id);
 	}
 
+	@Override
+	@Transactional
+	public OutputBasketDto getBasketByUserId(Long userId) {
+		User user = userRepository.getOne(userId);
+		return basketMapper.fromBasket(user.getBasket());
+	}
+
+	@Override
+	public OutputBasketDto getBasket(Long id) {
+		return basketMapper.fromBasket(basketRepository.findById(id).orElse(new Basket()));
+	}
+
 }
