@@ -139,6 +139,32 @@ class BasketServiceImplTest {
 		assertNotNull(actual);
 		assertEquals(basket.getId(), actual.getBasketId());
 	}
+	
+	@Test
+	void testRemoveProducts() {
+		Long basketId = 1L;
+		User user = new User("user", "pass", true); 
+		user.setId(1L);
+		Product product = new Product("product", 100L);
+		product.setId(1L);
+		Basket basket = new Basket(user);
+		basket.setId(basketId);
+		basket.setProducts(Arrays.asList(product));
+		
+		InputBasketDto inputBasketDto = new InputBasketDto();
+		inputBasketDto.setBasketId(basketId);
+		inputBasketDto.setUserId(user.getId());
+		inputBasketDto.setProductId(Arrays.asList(product.getId(), product.getId(), product.getId()));
+		
+		Mockito.when(basketRepository.getOne(Mockito.anyLong())).thenReturn(basket);
+		Mockito.when(basketRepository.save(Mockito.any(Basket.class))).thenReturn(basket);
+		Mockito.when(productRepository.getOne(Mockito.anyLong())).thenReturn(product);
+		
+		OutputBasketDto actual = basketService.removeProducts(inputBasketDto);
+		
+		assertNotNull(actual);
+		assertEquals(basket.getId(), actual.getBasketId());
+	}
 
 	@Test
 	void testDeleteBasket() {

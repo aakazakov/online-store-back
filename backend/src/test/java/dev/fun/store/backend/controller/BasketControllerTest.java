@@ -143,5 +143,18 @@ class BasketControllerTest {
 		.andExpect(status().isOk())
     .andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));		
 	}
+	
+	@Test
+	void testRemoveProducts() throws Exception {
+		Mockito.when(basketService.removeProducts(Mockito.any(InputBasketDto.class))).thenReturn(outputBasketDto);
+		
+		mockMvc
+		.perform(MockMvcRequestBuilders.put("/baskets/remove-products")
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(objectMapper.writeValueAsString(inputBasketDto))
+				.characterEncoding("utf-8"))
+		.andExpect(status().isOk())
+    .andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));		
+	}
 
 }

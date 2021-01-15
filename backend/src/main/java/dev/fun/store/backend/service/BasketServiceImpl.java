@@ -78,9 +78,16 @@ public class BasketServiceImpl implements BasketService {
 	}
 
 	@Override
+	@Transactional
 	public OutputBasketDto removeProducts(InputBasketDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		Basket basket = basketRepository.getOne(dto.getBasketId());
+		List<Product> removedProducts = getProductsByIDs(dto.getProductId());
+		List<Product> productList = new ArrayList<>(basket.getProducts());
+		for (Product p : removedProducts) {
+			productList.remove(p);
+		}
+		basket.setProducts(productList);
+		return basketMapper.fromBasket(basketRepository.save(basket));
 	}
 	
 	/**

@@ -52,4 +52,9 @@ public class BasketController {
 		return basketService.addProducts(dto);
 	}
 	
+	@PutMapping(path = "/remove-products", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public OutputBasketDto removeProducts(@RequestBody InputBasketDto dto) {
+		return basketService.removeProducts(dto);
+	}
+	
 }
