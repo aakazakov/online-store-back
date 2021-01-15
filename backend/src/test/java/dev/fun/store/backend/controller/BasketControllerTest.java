@@ -98,6 +98,26 @@ class BasketControllerTest {
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));
 	}
+	
+	@Test
+	void testGetBasket() throws Exception {
+		Mockito.when(basketService.getBasket(Mockito.anyLong())).thenReturn(outputBasketDto);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/baskets/id/{id}", 1L).accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));
+	}
+	
+	@Test
+	void testGetBasketById() throws Exception {
+		Mockito.when(basketService.getBasketByUserId(Mockito.anyLong())).thenReturn(outputBasketDto);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/baskets/user/{id}", 1L).accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));
+	}
 
 	@Test
 	void testDeleteBasket() throws Exception {
