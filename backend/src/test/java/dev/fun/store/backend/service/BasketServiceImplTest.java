@@ -3,6 +3,7 @@ package dev.fun.store.backend.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,6 +73,45 @@ class BasketServiceImplTest {
 		assertEquals(1, actual.getDetails().size());
 		assertEquals(30L, actual.getTotalCost());
 		assertEquals(3, actual.getTotalAmount());
+	}
+	
+	@Test
+	void testGetBasket() {
+		Long basketId = 1L;
+		User user = new User("user", "pass", true); 
+		user.setId(1L);
+		Product product = new Product("product", 100L);
+		product.setId(1L);
+		Basket basket = new Basket(user);
+		basket.setId(basketId);
+		basket.setProducts(Arrays.asList(product));
+		
+		Mockito.when(basketRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(basket));
+		
+		OutputBasketDto actual = basketService.getBasket(basketId);
+		
+		assertNotNull(actual);
+		assertEquals(basket.getId(), actual.getBasketId());
+	}
+	
+	@Test
+	void testGetBasketByUserId() {
+		Long userId = 1L;
+		User user = new User("user", "pass", true); 
+		user.setId(userId);
+		Product product = new Product("product", 100L);
+		product.setId(1L);
+		Basket basket = new Basket(user);
+		basket.setId(1L);
+		basket.setProducts(Arrays.asList(product));		
+		user.setBasket(basket);
+		
+		Mockito.when(userRepository.getOne(Mockito.anyLong())).thenReturn(user);
+		
+		OutputBasketDto actual = basketService.getBasketByUserId(userId);
+		
+		assertNotNull(actual);
+		assertEquals(basket.getId(), actual.getBasketId());
 	}
 
 	@Test
