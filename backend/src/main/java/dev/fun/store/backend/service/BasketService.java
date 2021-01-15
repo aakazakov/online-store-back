@@ -13,6 +13,20 @@ public interface BasketService {
 	OutputBasketDto createBasket(InputBasketDto dto);
 	
 	/**
+	 * Adds products to the basket
+	 * @param dto {@Link InputBasketDto}
+	 * @return {@link OutputBasketDto}
+	 */
+	OutputBasketDto addProducts(InputBasketDto dto);
+	
+	/**
+	 * Removes products from the basket
+	 * @param dto {@Link InputBasketDto}
+	 * @return {@link OutputBasketDto}
+	 */
+	OutputBasketDto removeProducts(InputBasketDto dto);
+	
+	/**
 	 * Returns basked by user ID
 	 * @param userId {@code Long} user ID
 	 * @return {@link OutputBasketDto}

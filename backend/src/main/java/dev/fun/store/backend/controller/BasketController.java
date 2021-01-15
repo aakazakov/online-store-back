@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,11 @@ public class BasketController {
 	@GetMapping("/id/{id}")
 	public OutputBasketDto getBasket(@PathVariable(name = "id") Long id) {
 		return basketService.getBasket(id);
-	} 
+	}
+	
+	@PutMapping(path = "/add-products", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public OutputBasketDto addProducts(@RequestBody InputBasketDto dto) {
+		return basketService.addProducts(dto);
+	}
 	
 }

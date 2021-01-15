@@ -1,5 +1,6 @@
 package dev.fun.store.backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,10 +41,7 @@ public class BasketServiceImpl implements BasketService {
 	public OutputBasketDto createBasket(InputBasketDto dto) {
 		User user = userRepository.getOne(dto.getUserId());
 		
-		List<Product> productList = dto.getProductId()
-				.stream()
-				.map(productRepository::getOne)
-				.collect(Collectors.toList());
+		List<Product> productList = getProductsByIDs(dto.getProductId());
 		
 		Basket basket = new Basket(user);
 		basket.setProducts(productList);
@@ -66,6 +64,34 @@ public class BasketServiceImpl implements BasketService {
 	@Override
 	public OutputBasketDto getBasket(Long id) {
 		return basketMapper.fromBasket(basketRepository.findById(id).orElse(new Basket()));
+	}
+
+	@Override
+	@Transactional
+	public OutputBasketDto addProducts(InputBasketDto dto) {
+		Basket basket = basketRepository.getOne(dto.getBasketId());
+		List<Product> newProducts = getProductsByIDs(dto.getProductId());
+		List<Product> productList = new ArrayList<>(basket.getProducts());
+		productList.addAll(newProducts);
+		basket.setProducts(productList);
+		return basketMapper.fromBasket(basketRepository.save(basket));
+	}
+
+	@Override
+	public OutputBasketDto removeProducts(InputBasketDto dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * Returns {@code List} of product references using the {@code getOne(id)} method
+	 * @param ids {@code List} of product IDs
+	 * @return {@code List} of product references
+	 */
+	private List<Product> getProductsByIDs(List<Long> ids) {
+		return ids.stream()
+							.map(productRepository::getOne)
+							.collect(Collectors.toList());
 	}
 
 }
