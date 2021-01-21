@@ -50,9 +50,8 @@ public class Order {
   @Column(name = "updated")
   private LocalDateTime updated;
   
-  @ManyToOne
-  @JoinColumn(name = "address_id")
-  private DeliveryAddress deliveryAddress;
+  @Column(name = "delivery_address")
+  private String deliveryAddress;
   
   @ManyToOne
   @JoinColumn(name = "user_id")
