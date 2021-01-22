@@ -25,7 +25,6 @@ public class OrderMapperImpl implements OrderMapper {
 	public OrderDto fromOrder(Order order) {
 		OrderDto dto = new OrderDto();
 		List<OrderDetailsDto> orderDetailsList = orderDetailsMapper.fromOrderDetailsList(order.getOrderDetails());
-		Long totalCost = orderDetailsList.stream().map(OrderDetailsDto::getTotalCost).reduce(0L, Long::sum);
 		
 		LocalDateTime updated = order.getUpdated();
 		if (updated != null)
@@ -36,7 +35,7 @@ public class OrderMapperImpl implements OrderMapper {
 		dto.setDeliveryAddress(order.getDeliveryAddress());
 		dto.setId(order.getId());
 		dto.setOrderDetails(orderDetailsList);
-		dto.setTotalCost(totalCost);
+		dto.setTotalCost(order.getTotalCost());
 		dto.setUserId(order.getUser().getId());
 		
 		return dto;
