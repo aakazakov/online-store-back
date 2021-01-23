@@ -90,5 +90,17 @@ class OrderControllerTest {
 		
 		verify(orderService).deleteOrder(id);
 	}
+	
+	void testGetUserOrders() throws Exception {
+		Long id = 1L;
+		
+		Mockito.when(orderService.getUserOrders(Mockito.anyLong())).thenReturn(orderDtoList);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/orders/all/user/{id}", id)
+					.accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(orderDtoList.size())));
+	}
 
 }

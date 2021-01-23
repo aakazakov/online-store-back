@@ -1,5 +1,7 @@
 package dev.fun.store.backend.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +34,11 @@ public class OrderController {
 	@GetMapping("/id/{id}")
 	public OrderDto getOrder(@PathVariable(name = "id") Long id) {
 		return orderService.getOrder(id);
+	}
+	
+	@GetMapping("/all/user/{id}")
+	public List<OrderDto> getUserOrders(@PathVariable(name = "id") Long userId) {
+		return orderService.getUserOrders(userId);
 	}
 	
 	@DeleteMapping("/delete/{id}")
