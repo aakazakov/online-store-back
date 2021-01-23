@@ -67,6 +67,19 @@ class OrderControllerTest {
 	}
 	
 	@Test
+	void testGetOrder() throws Exception {
+		OrderDto dto = orderDtoList.get(0);
+		
+		Mockito.when(orderService.getOrder(Mockito.anyLong())).thenReturn(dto);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/orders/id/{id}", 1L)
+					.accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
+	}
+	
+	@Test
 	void testDeleteOrder() throws Exception {
 		Long id = 1L;
 		
