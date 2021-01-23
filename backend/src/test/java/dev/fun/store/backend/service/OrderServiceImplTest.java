@@ -127,10 +127,14 @@ class OrderServiceImplTest {
 		Mockito.verify(orderRepository).deleteById(Mockito.anyLong());
 	}
 
-	@Disabled
 	@Test
 	void testGetUserOrders() {
-		fail("Not yet implemented");
+		Mockito.when(orderRepository.findByUserId(Mockito.anyLong())).thenReturn(Arrays.asList(order));
+		
+		List<OrderDto> actual = orderService.getUserOrders(1L);
+		
+		assertNotNull(actual);
+		assertEquals(order.getId(), actual.get(0).getId());
 	}
 
 }

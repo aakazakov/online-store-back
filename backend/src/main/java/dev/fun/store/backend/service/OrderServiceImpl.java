@@ -94,8 +94,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public List<OrderDto> getUserOrders(Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderMapper.fromOrderList(orderRepository.findByUserId(userId));
 	}
 
 }
