@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
+	@Transactional
 	public OrderDto createNewOrder(OrderDto dto) {
 		Order order = new Order(OrderStatus.CREATED, LocalDateTime.now());
 		
@@ -82,6 +85,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
+	@Transactional
 	public OrderDto updateOrder(OrderDto dto) {
 		// TODO Auto-generated method stub
 		return null;
