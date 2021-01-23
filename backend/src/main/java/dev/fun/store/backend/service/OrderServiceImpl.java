@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import dev.fun.store.backend.dao.UserRepository;
 import dev.fun.store.backend.domain.Product;
 import dev.fun.store.backend.domain.User;
 import dev.fun.store.backend.domain.order.Order;
+import dev.fun.store.backend.domain.order.OrderDetails;
 import dev.fun.store.backend.domain.order.OrderStatus;
 import dev.fun.store.backend.dto.OrderDto;
 import dev.fun.store.backend.mapper.OrderMapper;
@@ -53,13 +55,23 @@ public class OrderServiceImpl implements OrderService{
 			}
 		}
 		
-		Long totalCost = productMap.entrySet().stream()
-				.map(set -> set.getKey().getCost() * set.getValue())
+		List<OrderDetails> orderDetailsList = productMap.entrySet().stream()
+				.map(set -> {
+					OrderDetails od = new OrderDetails();
+					od.setOrder(order);
+					od.setAmount(set.getValue());
+					od.setProduct(set.getKey());
+					od.setTotalCost(set.getKey().getCost() * set.getValue());
+					return od;
+				}).collect(Collectors.toList());
+		
+		order.setOrderDetails(orderDetailsList);
+		
+		Long totalCost = orderDetailsList.stream()
+				.map(OrderDetails::getTotalCost)
 				.reduce(0L, Long::sum);
 		
 		order.setTotalCost(totalCost);
-		
-		// FIXME no OrderDetails list to be created was found
 		
 		return orderMapper.fromOrder(orderRepository.save(order));
 	}
