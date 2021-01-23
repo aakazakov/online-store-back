@@ -79,10 +79,7 @@ class OrderServiceImplTest {
 		
 		order.setOrderDetails(orderDetailsList);		
 		order.setTotalCost(orderDetails1.getTotalCost() + orderDetails2.getTotalCost());
-		
-		OrderDto orderDto = new OrderDto();
-		orderDto.setUserId(user.getId());
-		orderDto.setDeliveryAddress(order.getDeliveryAddress());
+
 	}
 
 	@Test
@@ -114,12 +111,21 @@ class OrderServiceImplTest {
 		assertEquals(order.getId(), actual.getId());
 	}
 
-	@Disabled
 	@Test
 	void testUpdateOrder() {
-		fail("Not yet implemented");
+		OrderDto dto = new OrderDto();
+		dto.setStatus(OrderStatus.COMPLETED);
+		dto.setId(order.getId());
+		
+		Mockito.when(orderRepository.getOne(Mockito.anyLong())).thenReturn(order);
+		Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
+		
+		OrderDto actual = orderService.updateOrder(dto);
+		
+		assertNotNull(actual);
+		assertEquals(OrderStatus.COMPLETED, actual.getStatus());
 	}
-
+	
 	@Test
 	void testDeleteOrder() {
 		orderService.deleteOrder(Mockito.anyLong());

@@ -91,6 +91,7 @@ class OrderControllerTest {
 		verify(orderService).deleteOrder(id);
 	}
 	
+	@Test
 	void testGetUserOrders() throws Exception {
 		Long id = 1L;
 		
@@ -101,6 +102,21 @@ class OrderControllerTest {
 					.accept(MediaType.APPLICATION_JSON_VALUE))
 			.andExpect(status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(orderDtoList.size())));
+	}
+	
+	@Test
+	void testUpdateOrder() throws JsonProcessingException, Exception {
+		OrderDto dto = orderDtoList.get(0);
+		
+		Mockito.when(orderService.updateOrder(Mockito.any(OrderDto.class))).thenReturn(dto);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.put("/orders/update")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(objectMapper.writeValueAsString(dto))
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk())
+		  .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
 
 }

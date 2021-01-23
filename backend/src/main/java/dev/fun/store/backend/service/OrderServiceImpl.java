@@ -87,13 +87,26 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	@Transactional
 	public OrderDto updateOrder(OrderDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		Long id = dto.getId();
+		
+		if (id == null)
+			return null;
+		
+		Order order = orderRepository.getOne(id);
+		
+		if (dto.getDeliveryAddress() != null)
+			order.setDeliveryAddress(dto.getDeliveryAddress());
+		if (dto.getStatus() != null)
+			order.setStatus(dto.getStatus());
+		if (dto.getTotalCost() != null)
+			order.setTotalCost(dto.getTotalCost());
+		
+		return orderMapper.fromOrder(orderRepository.save(order));
 	}
 
 	@Override
 	public void deleteOrder(Long id) {
-		orderRepository.deleteById(id);		
+		orderRepository.deleteById(id);
 	}
 
 	@Override
