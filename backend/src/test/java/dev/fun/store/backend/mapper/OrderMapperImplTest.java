@@ -2,7 +2,6 @@ package dev.fun.store.backend.mapper;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +13,6 @@ import dev.fun.store.backend.domain.Product;
 import dev.fun.store.backend.domain.User;
 import dev.fun.store.backend.domain.order.Order;
 import dev.fun.store.backend.domain.order.OrderDetails;
-import dev.fun.store.backend.domain.order.OrderStatus;
 import dev.fun.store.backend.dto.OrderDto;
 
 class OrderMapperImplTest {
@@ -28,7 +26,7 @@ class OrderMapperImplTest {
 		OrderDetailsMapperImpl odm = new OrderDetailsMapperImpl();
 		mapper = new OrderMapperImpl(odm);
 		
-		Order order = new Order(OrderStatus.CREATED, LocalDateTime.now());
+		Order order = new Order();
 		order.setId(1L);
 		order.setDeliveryAddress("☡");
 		
@@ -54,7 +52,7 @@ class OrderMapperImplTest {
 		
 		order.setTotalCost(orderDetails1.getTotalCost() + orderDetails2.getTotalCost());
 		
-		Order order2 = new Order(OrderStatus.CREATED, LocalDateTime.now());
+		Order order2 = new Order();
 		order2.setId(2L);
 		order2.setDeliveryAddress("☡");
 		

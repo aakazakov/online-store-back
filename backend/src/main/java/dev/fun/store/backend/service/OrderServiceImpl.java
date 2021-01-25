@@ -1,6 +1,5 @@
 package dev.fun.store.backend.service;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +37,9 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	@Transactional
 	public OrderDto createNewOrder(OrderDto dto) {
-		Order order = new Order(OrderStatus.CREATED, LocalDateTime.now());
-		
-		order.setDeliveryAddress(dto.getDeliveryAddress());
+		Order order = new Order();
 		
 		User user = userRepository.getOne(dto.getUserId());
-		order.setUser(user);
 		
 		List<Product> productList = user.getBasket().getProducts();
 		
@@ -68,13 +64,16 @@ public class OrderServiceImpl implements OrderService{
 					return od;
 				}).collect(Collectors.toList());
 		
-		order.setOrderDetails(orderDetailsList);
 		
 		Long totalCost = orderDetailsList.stream()
 				.map(OrderDetails::getTotalCost)
 				.reduce(0L, Long::sum);
 		
+		order.setDeliveryAddress(dto.getDeliveryAddress());
+		order.setUser(user);
+		order.setOrderDetails(orderDetailsList);
 		order.setTotalCost(totalCost);
+		order.setStatus(OrderStatus.CREATED);
 		
 		return orderMapper.fromOrder(orderRepository.save(order));
 	}

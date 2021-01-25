@@ -2,7 +2,6 @@ package dev.fun.store.backend.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -56,8 +55,9 @@ class OrderServiceImplTest {
 		basket.setProducts(productList);
 		user.setBasket(basket);
 		
-		order = new Order(OrderStatus.CREATED, LocalDateTime.now());
+		order = new Order();
 		order.setUser(user);
+		order.setStatus(OrderStatus.CREATED);
 		
 		order.setDeliveryAddress("5 steps forward, 3 steps right, turn left, then 10 jumps back");
 		order.setId(1L);

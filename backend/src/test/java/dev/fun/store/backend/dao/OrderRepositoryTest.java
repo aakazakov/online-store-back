@@ -2,7 +2,6 @@ package dev.fun.store.backend.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import dev.fun.store.backend.domain.User;
 import dev.fun.store.backend.domain.order.Order;
-import dev.fun.store.backend.domain.order.OrderStatus;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -31,9 +29,9 @@ class OrderRepositoryTest {
 		
 		User user = testEntityManager.persist(new User("user", "pass", true));
 		
-		Order order1 = new Order(OrderStatus.CREATED, LocalDateTime.now());
+		Order order1 = new Order();
 		order1.setUser(user);
-		Order order2 = new Order(OrderStatus.CREATED, LocalDateTime.now());
+		Order order2 = new Order();
 		order2.setUser(user);
 	
 		testEntityManager.persistAndFlush(order1);

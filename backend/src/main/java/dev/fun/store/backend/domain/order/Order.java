@@ -27,11 +27,11 @@ public class Order {
   private Long id;
   
   @Enumerated(EnumType.STRING)
-  @Column(name = "status", nullable = false)
+  @Column(name = "status")
   private OrderStatus status;
 	
   @CreationTimestamp
-  @Column(name = "created", nullable = false)
+  @Column(name = "created")
   private LocalDateTime created;
   
   @UpdateTimestamp
@@ -50,10 +50,5 @@ public class Order {
   
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
   private List<OrderDetails> orderDetails;
-
-	public Order(OrderStatus status, LocalDateTime created) {
-		this.status = status;
-		this.created = created;
-	}
 
 }
