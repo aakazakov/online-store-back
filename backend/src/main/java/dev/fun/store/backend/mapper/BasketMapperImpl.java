@@ -18,6 +18,10 @@ public class BasketMapperImpl implements BasketMapper {
 	
 	@Override
 	public OutputBasketDto fromBasket(Basket basket) {
+		if (basket == null) {
+			return null;
+		}
+		
 		OutputBasketDto outputBasketDto = new OutputBasketDto();
 		List<BasketDetailDto> basketDetailDtoList = new ArrayList<>();
 		Integer totalAmount = 0;

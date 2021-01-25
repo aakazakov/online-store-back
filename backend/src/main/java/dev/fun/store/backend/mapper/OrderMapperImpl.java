@@ -24,6 +24,10 @@ public class OrderMapperImpl implements OrderMapper {
 
 	@Override
 	public OrderDto fromOrder(Order order) {
+		if (order == null) {
+			return null;
+		}
+		
 		OrderDto dto = new OrderDto();
 		List<OrderDetailsDto> orderDetailsList = orderDetailsMapper.fromOrderDetailsList(order.getOrderDetails());
 		
@@ -48,6 +52,11 @@ public class OrderMapperImpl implements OrderMapper {
 		return orderList.stream().map(this::fromOrder).collect(Collectors.toList());
 	}
 	
+	/**
+	 * Returns a formatted date as a string
+	 * @param date {@link java.util.Date}
+	 * @return formatted date as a {@code String}
+	 */
 	private String formatDate(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z");
 		return sdf.format(date);

@@ -13,6 +13,10 @@ public class OrderDetailsMapperImpl implements OrderDetailsMapper {
 
 	@Override
 	public OrderDetailsDto fromOrderDetails(OrderDetails orderDetails) {
+		if (orderDetails == null) {
+			return null;
+		}
+		
 		OrderDetailsDto dto = new OrderDetailsDto();
 		
 		dto.setId(orderDetails.getId());
