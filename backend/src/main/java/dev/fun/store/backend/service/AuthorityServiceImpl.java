@@ -31,7 +31,7 @@ public class AuthorityServiceImpl implements AuthorityService{
 
 	@Override
 	public AuthorityDto getOne(Long id) {
-		return AuthorityMapper.MAPPER.fromAuthority(authorityRepository.findById(id).orElse(new Authority()));
+		return AuthorityMapper.MAPPER.fromAuthority(authorityRepository.findById(id).orElse(null));
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService{
 	public OrderDto createNewOrder(OrderDto dto) {
 		Order order = new Order();
 		
-		User user = userRepository.getOne(dto.getUserId());
+		User user = userRepository.findById(dto.getUserId()).orElse(null); // check null
 		
 		List<Product> productList = user.getBasket().getProducts();
 		
@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public OrderDto getOrder(Long id) {
-		return orderMapper.fromOrder(orderRepository.findById(id).orElse(new Order()));
+		return orderMapper.fromOrder(orderRepository.findById(id).orElse(null));
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import dev.fun.store.backend.mapper.UserMapper;
 import dev.fun.store.backend.mapper.UserMapperDecorator;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
 	private final AuthorityRepository authorityRepository;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto getOne(Long id) {
-		return UserMapper.MAPPER.fromUser(userRepository.findById(id).orElse(new User()));
+		return UserMapper.MAPPER.fromUser(userRepository.findById(id).orElse(null));
 	}
 
 	@Override

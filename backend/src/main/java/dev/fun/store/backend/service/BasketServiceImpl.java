@@ -63,7 +63,7 @@ public class BasketServiceImpl implements BasketService {
 
 	@Override
 	public OutputBasketDto getBasket(Long id) {
-		return basketMapper.fromBasket(basketRepository.findById(id).orElse(new Basket()));
+		return basketMapper.fromBasket(basketRepository.findById(id).orElse(null));
 	}
 
 	@Override

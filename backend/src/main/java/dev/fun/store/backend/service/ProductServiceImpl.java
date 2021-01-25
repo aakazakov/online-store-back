@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto getOne(Long id) {
-		return ProductMapper.MAPPER.fromProduct(productRepository.findById(id).orElse(new Product()));
+		return ProductMapper.MAPPER.fromProduct(productRepository.findById(id).orElse(null));
 	}
 
 	@Override

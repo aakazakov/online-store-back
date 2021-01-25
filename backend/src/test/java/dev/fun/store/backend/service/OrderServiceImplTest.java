@@ -89,7 +89,7 @@ class OrderServiceImplTest {
 		orderDto.setUserId(user.getId());
 		orderDto.setDeliveryAddress(order.getDeliveryAddress());
 		
-		Mockito.when(userRepository.getOne(Mockito.anyLong())).thenReturn(user);
+		Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(user));
 		Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
 		
 		OrderDto actual = orderService.createNewOrder(orderDto);

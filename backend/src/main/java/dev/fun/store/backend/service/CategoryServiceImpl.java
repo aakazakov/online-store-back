@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryDto getOne(Long id) {
-		return CategoryMapper.MAPPER.fromCategory(categoryRepository.findById(id).orElse(new Category()));
+		return CategoryMapper.MAPPER.fromCategory(categoryRepository.findById(id).orElse(null));
 	}
 
 	@Override
