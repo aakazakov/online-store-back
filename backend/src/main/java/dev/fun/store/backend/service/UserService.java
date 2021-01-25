@@ -7,8 +7,8 @@ import dev.fun.store.backend.dto.UserDto;
 public interface UserService {
 	
 	/**
-	 * Returns the user by its id
-	 * @param id {@code Long} user id
+	 * Returns the user by its ID
+	 * @param id {@code Long} user ID
 	 * @return one {@link UserDto}
 	 */
 	UserDto getOne(Long id);
@@ -21,21 +21,21 @@ public interface UserService {
 	
 	/**
 	 * Used if need the user to be saved in a repository (e.g. DB) as a client
-	 * @param dto user {@link UserDto} to save
-	 * @return saved user {@link UserDto}
+	 * @param dto {@link UserDto} data to be saved
+	 * @return saved user as {@link UserDto}
 	 */
 	UserDto saveClient(UserDto dto);
 	
 	/**
 	 * Used to save the modified user to a repository (e.g. DB)
-	 * @param dto modified user {@link UserDto}
-	 * @return saved user {@link UserDto}
+	 * @param dto {@link UserDto} modified user
+	 * @return saved user as {@link UserDto}
 	 */
 	UserDto update(UserDto dto);
 	
 	/**
-	 * Delete the user by its id 
-	 * @param id {@code Long} user id
+	 * Delete the user by its ID
+	 * @param id {@code Long} user ID
 	 */
 	void delete(Long id);
 	

@@ -11,8 +11,8 @@ public interface AuthorityRepository extends JpaRepository<Authority, Long>{
 	
 	/**
 	 * Returns a {@code List} of all authorities belonging to specific user
-	 * @param id {@code Long} user id
-	 * @return {@code List} of {@link Authority}s
+	 * @param id {@code Long} user ID
+	 * @return {@code List} of {@link Authority}
 	 */
 	@Query(
 			value = "SELECT a.id, a.title "

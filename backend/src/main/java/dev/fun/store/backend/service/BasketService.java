@@ -34,15 +34,15 @@ public interface BasketService {
 	OutputBasketDto getBasketByUserId(Long userId);
 	
 	/**
-	 * Returns basket by it's ID
+	 * Returns basket by its ID
 	 * @param id {@code Long} basket ID
 	 * @return {@link OutputBasketDto}
 	 */
 	OutputBasketDto getBasket(Long id);
 	
 	/**
-	 * Delete the basket by it's id
-	 * @param id {@code Long} basket id
+	 * Delete the basket by its ID
+	 * @param id {@code Long} basket ID
 	 */
 	void deleteBasket(Long id);
 	

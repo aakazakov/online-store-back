@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	/**
 	 * Returns a {@code List} of all users with the concrete authority
-	 * @param id {@code Long} authority id
+	 * @param id {@code Long} authority ID
 	 * @return {@code List} of {@link User}
 	 */
 	@Query(

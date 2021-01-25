@@ -11,14 +11,16 @@ public abstract class UserMapperDecorator implements UserMapper {
 	
 	public static final String STUB = "";
 
-	private UserMapper delegate;
+	private final UserMapper delegate;
 	
 	@Autowired
-	public UserMapperDecorator(UserMapper delegate) {
+	protected UserMapperDecorator(UserMapper delegate) {
 		this.delegate = delegate;
 	}
 
-	// Resetting the password passed to UserDto
+	/**
+	 * Resetting the password passed to UserDto
+	 */
 	@Override
 	public UserDto fromUser(User user) {
 		UserDto dto = delegate.fromUser(user);
@@ -26,7 +28,9 @@ public abstract class UserMapperDecorator implements UserMapper {
 		return dto;
 	}
 	
-	// Resetting the password passed to UserDto
+	/**
+	 * Resetting the password passed to UserDto
+	 */
 	@Override
 	public List<UserDto> fromUserList(List<User> userList) {
 		List<UserDto> dtoList = delegate.fromUserList(userList);

@@ -14,7 +14,7 @@ import dev.fun.store.backend.mapper.CategoryMapper;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 	
-	private CategoryRepository categoryRepository;
+	private final CategoryRepository categoryRepository;
 	
 	public CategoryServiceImpl(CategoryRepository categoryRepository) {
 		this.categoryRepository = categoryRepository;

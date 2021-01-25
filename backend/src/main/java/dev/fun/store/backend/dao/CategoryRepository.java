@@ -11,8 +11,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long>{
 
 	/**
 	 * Returns a {@code List} of all product categories
-	 * @param id {@code Long} product id 
-	 * @return {@code List} of {@link Category}s
+	 * @param id {@code Long} product ID
+	 * @return {@code List} of {@link Category}
 	 */
 	@Query(
 			value = "SELECT c.id, c.title "
