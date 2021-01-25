@@ -1,18 +1,20 @@
 package dev.fun.store.backend.domain.order;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import dev.fun.store.backend.domain.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Data
 @NoArgsConstructor
 @Table(name = "orders")
@@ -30,13 +32,15 @@ public class Order {
   @Column(name = "status")
   private OrderStatus status;
 	
-  @CreationTimestamp
+  @CreatedDate
+  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created")
-  private LocalDateTime created;
+  private Date created;
   
-  @UpdateTimestamp
+  @LastModifiedDate
+  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "updated")
-  private LocalDateTime updated;
+  private Date updated;
   
   @Column(name = "delivery_address")
   private String deliveryAddress;

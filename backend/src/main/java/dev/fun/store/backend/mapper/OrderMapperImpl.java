@@ -1,6 +1,7 @@
 package dev.fun.store.backend.mapper;
 
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +27,12 @@ public class OrderMapperImpl implements OrderMapper {
 		OrderDto dto = new OrderDto();
 		List<OrderDetailsDto> orderDetailsList = orderDetailsMapper.fromOrderDetailsList(order.getOrderDetails());
 		
-		LocalDateTime updated = order.getUpdated();
-		if (updated != null)
-			dto.setUpdated(updated);
+		if (order.getUpdated() != null)
+			dto.setUpdated(formatDate(order.getUpdated()));
 		
-		dto.setCreated(order.getCreated());
+		if (order.getUpdated() != null)
+			dto.setCreated(formatDate(order.getCreated()));
+		
 		dto.setStatus(order.getStatus());
 		dto.setDeliveryAddress(order.getDeliveryAddress());
 		dto.setId(order.getId());
@@ -44,6 +46,11 @@ public class OrderMapperImpl implements OrderMapper {
 	@Override
 	public List<OrderDto> fromOrderList(List<Order> orderList) {
 		return orderList.stream().map(this::fromOrder).collect(Collectors.toList());
+	}
+	
+	private String formatDate(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z");
+		return sdf.format(date);
 	}
 
 }
