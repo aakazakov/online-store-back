@@ -18,7 +18,7 @@ public abstract class UserMapperDecorator implements UserMapper {
 		this.delegate = delegate;
 	}
 
-	/**
+	/*
 	 * Resetting the password passed to UserDto
 	 */
 	@Override
@@ -28,7 +28,7 @@ public abstract class UserMapperDecorator implements UserMapper {
 		return dto;
 	}
 	
-	/**
+	/*
 	 * Resetting the password passed to UserDto
 	 */
 	@Override
