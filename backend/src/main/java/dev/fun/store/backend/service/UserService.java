@@ -2,9 +2,11 @@ package dev.fun.store.backend.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import dev.fun.store.backend.dto.UserDto;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 	
 	/**
 	 * Returns the user by its ID
