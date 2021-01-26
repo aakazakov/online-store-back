@@ -22,4 +22,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 			nativeQuery = true)
 	List<User> findUsersByAuthorityId(Long id);
 	
+	/**
+	 * Returns the user found by username
+	 * @param username
+	 * @return {@link User}
+	 */
+	User findFirstByUsername(String username);
+	
 }
