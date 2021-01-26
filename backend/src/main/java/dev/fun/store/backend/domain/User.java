@@ -23,8 +23,8 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "login", nullable = false)
-	private String login;
+	@Column(name = "username", nullable = false)
+	private String username;
 	
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -32,8 +32,8 @@ public class User {
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
 
-	public User(String login, String password, Boolean enabled) {
-		this.login = login;
+	public User(String username, String password, Boolean enabled) {
+		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 	}

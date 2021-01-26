@@ -48,17 +48,17 @@ class UserMapperDecoratorTest {
 		
 		UserDto dto1 = new UserDto();
 		dto1.setId(u1.getId());
-		dto1.setLogin(u1.getLogin());
+		dto1.setUsername(u1.getUsername());
 		dto1.setPassword(u1.getPassword());
 		
 		UserDto dto2 = new UserDto();
 		dto2.setId(u2.getId());
-		dto2.setLogin(u2.getLogin());
+		dto2.setUsername(u2.getUsername());
 		dto2.setPassword(u2.getPassword());
 		
 		UserDto dto3 = new UserDto();
 		dto3.setId(u3.getId());
-		dto3.setLogin(u3.getLogin());
+		dto3.setUsername(u3.getUsername());
 		dto3.setPassword(u3.getPassword());
 		
 		dtoList.addAll(Arrays.asList(dto1, dto2, dto3));

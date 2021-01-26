@@ -95,7 +95,7 @@ class UserControllerTest {
 	@Test
 	void testUpdateUser() throws JsonProcessingException, Exception {
 		UserDto dto = userList.get(0);
-		dto.setLogin("<(^=^)>");
+		dto.setUsername("<(^=^)>");
 		dto.setPassword("123");
 		
 		Mockito.when(userService.update(Mockito.any(UserDto.class))).thenReturn(dto);
@@ -107,7 +107,7 @@ class UserControllerTest {
 					.characterEncoding("utf-8"))
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.login", Matchers.is(dto.getLogin())));
+			.andExpect(MockMvcResultMatchers.jsonPath("$.username", Matchers.is(dto.getUsername())));
 	}
 
 	@Test

@@ -17,7 +17,7 @@ class BasketMapperImplTest {
 	void testFromBasket() {
 		User user = new User();
 		user.setId(1L);
-		user.setLogin("login");
+		user.setUsername("login");
 		user.setPassword("password");
 		user.setEnabled(true);
 		

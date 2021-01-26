@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public UserDto update(UserDto dto) {
 		Long id = dto.getId();
-		String newLogin = dto.getLogin();
+		String newUsername = dto.getUsername();
 		String newPassword = dto.getPassword();
 		Boolean newEnabled = dto.getEnabled();
 		
@@ -63,8 +63,8 @@ public class UserServiceImpl implements UserService {
 		
 		User user = userRepository.getOne(id);
 		
-		if (newLogin != null)
-			user.setLogin(newLogin);
+		if (newUsername != null)
+			user.setUsername(newUsername);
 		if (newPassword != null && !newPassword.equals(UserMapperDecorator.STUB))
 			user.setPassword(newPassword);
 		if (newEnabled == null)

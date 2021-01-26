@@ -62,9 +62,9 @@ class UserServiceImplTest {
 	@Test
 	void testSaveClient() {
 		UserDto dto = new UserDto();
-		dto.setLogin("login");
+		dto.setUsername("login");
 		dto.setPassword("pass");
-		User client = new User(dto.getLogin(), dto.getPassword(), true);
+		User client = new User(dto.getUsername(), dto.getPassword(), true);
 		client.setId(1L);
 		List<Authority> auths =
 				new ArrayList<>(Arrays.asList(new Authority(Role.CLIENT), new Authority(Auth.ADD_COMMENTS)));
@@ -83,7 +83,7 @@ class UserServiceImplTest {
 		User u = userList.get(0);
 		UserDto dto = new UserDto();
 		dto.setId(u.getId());
-		dto.setLogin("new_awesome_login_" + u.getLogin());
+		dto.setUsername("new_awesome_login_" + u.getUsername());
 		dto.setPassword("new_super_secure_pass_" + u.getPassword());
 		
 		Mockito.when(userRepository.getOne(u.getId())).thenReturn(u);
@@ -100,7 +100,7 @@ class UserServiceImplTest {
 		System.out.println(actual);
 		
 		assertNotNull(actual);
-		assertEquals(dto.getLogin(), actual.getLogin());
+		assertEquals(dto.getUsername(), actual.getUsername());
 	}
 
 	@Test
