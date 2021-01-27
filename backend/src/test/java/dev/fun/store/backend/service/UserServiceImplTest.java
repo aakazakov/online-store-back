@@ -83,21 +83,13 @@ class UserServiceImplTest {
 		User u = userList.get(0);
 		UserDto dto = new UserDto();
 		dto.setId(u.getId());
-		dto.setUsername("new_awesome_login_" + u.getUsername());
-		dto.setPassword("new_super_secure_pass_" + u.getPassword());
+		dto.setUsername("new_awesome_login_");
+		dto.setPassword("new_secure_password_");
 		
 		Mockito.when(userRepository.getOne(u.getId())).thenReturn(u);
-		Mockito.when(userRepository.save(Mockito.any(User.class))).then(invocation -> {
-			User newUser = invocation.getArgument(0);
-			
-			assertEquals(dto.getPassword(), u.getPassword());
-			
-			return newUser;
-		});
+		Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(u);
 		
 		UserDto actual = userService.update(dto);
-		
-		System.out.println(actual);
 		
 		assertNotNull(actual);
 		assertEquals(dto.getUsername(), actual.getUsername());
