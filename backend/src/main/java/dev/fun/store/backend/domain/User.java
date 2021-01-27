@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import dev.fun.store.backend.domain.authority.Authority;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +19,9 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	private static final String SEQUENCE_NAME = "user_seq";
+	
+	@Transient
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
@@ -31,14 +37,18 @@ public class User {
 	
 	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
+	
+	public void setPassword(String password) {
+		this.password = passwordEncoder.encode(password);
+	}
 
 	public User(String username, String password, Boolean enabled) {
 		this.username = username;
-		this.password = password;
+		this.password = passwordEncoder.encode(password);
 		this.enabled = enabled;
 	}
 	
-  @ManyToMany
+  @ManyToMany(fetch =  FetchType.EAGER)
   @JoinTable(
   		name = "users_authorities",
   		joinColumns = @JoinColumn(name = "user_id"),
