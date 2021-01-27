@@ -8,6 +8,7 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import dev.fun.store.backend.domain.authority.Role;
 import dev.fun.store.backend.service.UserService;
 
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 	
   @Autowired
@@ -36,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
   @Autowired
   private UserService userService;
   
-  @Override
+	@Override
   protected void configure(HttpSecurity http) throws Exception {
   	http
   		.authorizeRequests()
@@ -51,9 +53,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
   					"/products/update"
   				).hasRole(Role.ADMIN.name())
   		.mvcMatchers(HttpMethod.DELETE,
-  					"/categories/delete/{\\d+}",
-  					"/products/delete/{\\d+}",
-  					"/users/delete/{\\d+}"
+  					"/categories/delete/{id}",
+  					"/products/delete/{id}",
+  					"/users/delete/{id}"
   				).hasRole(Role.ADMIN.name())
   		.mvcMatchers(HttpMethod.GET,
   					"/authorities/**"
@@ -62,36 +64,45 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 						"/orders/update"
 					).hasRole(Role.MANAGER.name())
 			.mvcMatchers(HttpMethod.DELETE,
-						"/orders/delete/{\\d+}"
+						"/orders/delete/{id}"
 					).hasRole(Role.MANAGER.name())
 			.mvcMatchers(HttpMethod.GET,
-						"/users/all"
+						"/users/all",
+						"/users/id/{id}"
 					).hasRole(Role.MANAGER.name())
   		.mvcMatchers(HttpMethod.POST,
 						"/baskets/create",
 						"/orders/create"
-				).hasRole(Role.CLIENT.name())
+  				).hasRole(Role.CLIENT.name())
 			.mvcMatchers(HttpMethod.PUT,
 						"/baskets/add-products",
-						"/baskets/remove-products"
+						"/baskets/remove-products",
+						"/users/update"
 					).hasRole(Role.CLIENT.name())
 			.mvcMatchers(HttpMethod.DELETE,
-						"/baskets/delete/{\\d+}"
+						"/baskets/delete/{id}"
 					).hasRole(Role.CLIENT.name())
 			.mvcMatchers(HttpMethod.GET,
-						"/baskets/id/{\\d+}",
-						"/baskets/user/{\\d+}",
-						"/orders/all/user/{\\d+}",
-						"/orders/id/{\\d+}"
+						"/baskets/id/{id}",
+						"/baskets/user/{id}",
+						"/orders/all/user/{id}",
+						"/orders/id/{id}"
 					).hasRole(Role.CLIENT.name())
 			.mvcMatchers(HttpMethod.GET,
-					"/categories/all",
-					"/categories/id/{\\d+}",
-					"/products/all",
-					"/products/id/{\\d+}"
-				).hasRole(Role.ANONYMOUS.name())
+						"/categories/all",
+						"/categories/id/{id}",
+						"/categories/all/product/{id}",
+						"/products/all",
+						"/products/id/{id}",
+						"/products/all/category/{id}"
+					).hasRole(Role.ANONYMOUS.name())
+			.mvcMatchers(HttpMethod.POST,
+						"/users/add-client"
+					).hasRole(Role.ANONYMOUS.name())
 			.mvcMatchers("/error").hasRole(Role.ANONYMOUS.name())
 			.anyRequest().denyAll();
+  	
+  	http.csrf().disable();
     
     http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
     http.formLogin().successHandler(restAuthenticationSuccessHandler);
