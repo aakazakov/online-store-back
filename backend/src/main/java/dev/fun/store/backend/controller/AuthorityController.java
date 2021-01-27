@@ -24,12 +24,12 @@ public class AuthorityController {
 	}
 	
 	@GetMapping("/all")
-	public List<AuthorityDto> getAllProducts() {
+	public List<AuthorityDto> getAllAuthorities() {
 		return authorityService.getAll();
 	}
 	
 	@GetMapping("/id/{id}")
-	public AuthorityDto getProduct(@PathVariable(name = "id") Long id) {
+	public AuthorityDto getAuthority(@PathVariable(name = "id") Long id) {
 		return authorityService.getOne(id);
 	}
 	
