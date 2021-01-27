@@ -49,19 +49,19 @@ class BasketControllerTest {
   BasketServiceImpl basketService;
   
 	@MockBean
-	private UserService userService;
+	UserService userService;
 	
 	@MockBean
-	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 	
 	@MockBean
-	private RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
 	
 	@MockBean
-	private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	RestAuthenticationFailureHandler restAuthenticationFailureHandler;
 	
 	@MockBean
-	private RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
+	RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
   
   InputBasketDto inputBasketDto;
   OutputBasketDto outputBasketDto;

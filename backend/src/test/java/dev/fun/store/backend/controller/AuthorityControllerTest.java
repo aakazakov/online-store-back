@@ -49,19 +49,19 @@ class AuthorityControllerTest {
 	AuthorityServiceImpl authorityService;
 	
 	@MockBean
-	private UserService userService;
+	UserService userService;
 	
 	@MockBean
-	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 	
 	@MockBean
-	private RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
 	
 	@MockBean
-	private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	RestAuthenticationFailureHandler restAuthenticationFailureHandler;
 	
 	@MockBean
-	private RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
+	RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
 	
 	static List<AuthorityDto> authList = new ArrayList<>();
 	static List<UserDto> userList = new ArrayList<>();
