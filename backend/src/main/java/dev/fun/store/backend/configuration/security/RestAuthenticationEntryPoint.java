@@ -10,6 +10,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
@@ -17,8 +20,12 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
       throws IOException, ServletException {
         
+  	log.info(
+  			"URI: " + request.getRequestURI()
+  			+ " PRINCIPAL: " 
+  					+ ((request.getUserPrincipal() == null) ? "NULL" : request.getUserPrincipal().getName()));
+  	
     response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-    
   }
 
 }
