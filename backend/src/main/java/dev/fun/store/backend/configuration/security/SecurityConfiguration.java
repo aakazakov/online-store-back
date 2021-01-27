@@ -94,10 +94,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 						"/categories/all/product/{id}",
 						"/products/all",
 						"/products/id/{id}",
-						"/products/all/category/{id}"
+						"/products/all/category/{id}",
+						"/logout"
 					).hasRole(Role.ANONYMOUS.name())
 			.mvcMatchers(HttpMethod.POST,
-						"/users/add-client"
+						"/users/add-client",
+						"/login"
 					).hasRole(Role.ANONYMOUS.name())
 			.mvcMatchers("/error").hasRole(Role.ANONYMOUS.name())
 			.anyRequest().denyAll();
