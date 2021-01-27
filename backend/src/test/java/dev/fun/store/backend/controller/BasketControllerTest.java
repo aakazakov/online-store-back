@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,11 +24,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.fun.store.backend.configuration.security.RestAuthenticationEntryPoint;
+import dev.fun.store.backend.configuration.security.RestAuthenticationFailureHandler;
+import dev.fun.store.backend.configuration.security.RestAuthenticationSuccessHandler;
+import dev.fun.store.backend.configuration.security.RestHttpStatusReturningLogoutSuccessHandler;
 import dev.fun.store.backend.dto.BasketDetailDto;
 import dev.fun.store.backend.dto.InputBasketDto;
 import dev.fun.store.backend.dto.OutputBasketDto;
 import dev.fun.store.backend.dto.ProductDto;
 import dev.fun.store.backend.service.BasketServiceImpl;
+import dev.fun.store.backend.service.UserService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(BasketController.class)
@@ -41,6 +47,21 @@ class BasketControllerTest {
   
   @MockBean
   BasketServiceImpl basketService;
+  
+	@MockBean
+	private UserService userService;
+	
+	@MockBean
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@MockBean
+	private RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	
+	@MockBean
+	private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	
+	@MockBean
+	private RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
   
   InputBasketDto inputBasketDto;
   OutputBasketDto outputBasketDto;
@@ -87,6 +108,7 @@ class BasketControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testCreateBasket() throws JsonProcessingException, Exception {
 		Mockito.when(basketService.createBasket(Mockito.any(InputBasketDto.class))).thenReturn(outputBasketDto);
 		
@@ -100,6 +122,7 @@ class BasketControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testGetBasket() throws Exception {
 		Mockito.when(basketService.getBasket(Mockito.anyLong())).thenReturn(outputBasketDto);
 		
@@ -110,6 +133,7 @@ class BasketControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testGetBasketById() throws Exception {
 		Mockito.when(basketService.getBasketByUserId(Mockito.anyLong())).thenReturn(outputBasketDto);
 		
@@ -120,6 +144,7 @@ class BasketControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testDeleteBasket() throws Exception {
 		Long id = 1L;
 		
@@ -132,6 +157,7 @@ class BasketControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testAddProducts() throws Exception {
 		Mockito.when(basketService.addProducts(Mockito.any(InputBasketDto.class))).thenReturn(outputBasketDto);
 		
@@ -145,6 +171,7 @@ class BasketControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testRemoveProducts() throws Exception {
 		Mockito.when(basketService.removeProducts(Mockito.any(InputBasketDto.class))).thenReturn(outputBasketDto);
 		

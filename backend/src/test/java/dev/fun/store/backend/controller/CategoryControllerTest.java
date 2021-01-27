@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,8 +25,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.fun.store.backend.configuration.security.RestAuthenticationEntryPoint;
+import dev.fun.store.backend.configuration.security.RestAuthenticationFailureHandler;
+import dev.fun.store.backend.configuration.security.RestAuthenticationSuccessHandler;
+import dev.fun.store.backend.configuration.security.RestHttpStatusReturningLogoutSuccessHandler;
 import dev.fun.store.backend.dto.CategoryDto;
 import dev.fun.store.backend.service.CategoryServiceImpl;
+import dev.fun.store.backend.service.UserService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CategoryController.class)
@@ -40,6 +46,21 @@ class CategoryControllerTest {
 	@MockBean
 	CategoryServiceImpl categoryService;
 	
+	@MockBean
+	private UserService userService;
+	
+	@MockBean
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@MockBean
+	private RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	
+	@MockBean
+	private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	
+	@MockBean
+	private RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
+	
 	static List<CategoryDto> categorylist = new ArrayList<>();
 	
 	@BeforeAll
@@ -52,6 +73,7 @@ class CategoryControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ANONYMOUS"})
 	void testGetAllCategories() throws Exception {
 		Mockito.when(categoryService.getAll()).thenReturn(categorylist);
 		
@@ -62,6 +84,7 @@ class CategoryControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ANONYMOUS"})
 	void testGetCategory() throws Exception {
 		CategoryDto dto = categorylist.get(0);
 		Long id = dto.getId();
@@ -75,6 +98,7 @@ class CategoryControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ADMIN"})
 	void testAddCategory() throws Exception {
 		CategoryDto c4 = new CategoryDto(); c4.setTitle("c4"); c4.setId(4L);
 		
@@ -90,6 +114,7 @@ class CategoryControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ADMIN"})
 	void testUpdateCategory() throws JsonProcessingException, Exception {
 		CategoryDto dto = new CategoryDto();
 		dto.setId(1L);
@@ -108,6 +133,7 @@ class CategoryControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ADMIN"})
 	void testDeleteCategory() throws Exception {
 		Long id = 1L;
 		
@@ -120,6 +146,7 @@ class CategoryControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"ANONYMOUS"})
 	void testGetAllCategoriesOfProduct() throws Exception {
 		Long id = 1L;
 		List<CategoryDto> catList = categorylist.subList(0, 2);

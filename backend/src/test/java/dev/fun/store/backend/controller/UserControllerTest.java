@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,6 +25,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.fun.store.backend.configuration.security.RestAuthenticationEntryPoint;
+import dev.fun.store.backend.configuration.security.RestAuthenticationFailureHandler;
+import dev.fun.store.backend.configuration.security.RestAuthenticationSuccessHandler;
+import dev.fun.store.backend.configuration.security.RestHttpStatusReturningLogoutSuccessHandler;
 import dev.fun.store.backend.dto.UserDto;
 import dev.fun.store.backend.service.UserServiceImpl;
 
@@ -40,6 +45,18 @@ class UserControllerTest {
 	@MockBean
 	UserServiceImpl userService;
 	
+	@MockBean
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@MockBean
+	private RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	
+	@MockBean
+	private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	
+	@MockBean
+	private RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
+	
 	static List<UserDto> userList = new ArrayList<>();
 	
 	@BeforeAll
@@ -53,6 +70,7 @@ class UserControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"MANAGER"})
 	void testGetAllUsers() throws Exception {
 		Mockito.when(userService.getAll()).thenReturn(userList);
 		
@@ -64,6 +82,7 @@ class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"MANAGER"})
 	void testGetUser() throws Exception {
 		Long id = 1L;
 		int index = 0;
@@ -78,6 +97,7 @@ class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ANONYMOUS"})
 	void testAddClient() throws JsonProcessingException, Exception {
 		UserDto dto = userList.get(0);
 		
@@ -93,6 +113,7 @@ class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testUpdateUser() throws JsonProcessingException, Exception {
 		UserDto dto = userList.get(0);
 		dto.setUsername("<(^=^)>");
@@ -111,6 +132,7 @@ class UserControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ADMIN"})
 	void testDeleteUser() throws Exception {
 		Long id = 1L;
 		

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,8 +25,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.fun.store.backend.configuration.security.RestAuthenticationEntryPoint;
+import dev.fun.store.backend.configuration.security.RestAuthenticationFailureHandler;
+import dev.fun.store.backend.configuration.security.RestAuthenticationSuccessHandler;
+import dev.fun.store.backend.configuration.security.RestHttpStatusReturningLogoutSuccessHandler;
 import dev.fun.store.backend.dto.OrderDto;
 import dev.fun.store.backend.service.OrderServiceImpl;
+import dev.fun.store.backend.service.UserService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(OrderController.class)
@@ -40,6 +46,21 @@ class OrderControllerTest {
   @MockBean
   OrderServiceImpl orderService;
   
+	@MockBean
+	private UserService userService;
+	
+	@MockBean
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@MockBean
+	private RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	
+	@MockBean
+	private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	
+	@MockBean
+	private RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
+  
   List<OrderDto> orderDtoList = new ArrayList<>();
   
   @BeforeEach
@@ -52,6 +73,7 @@ class OrderControllerTest {
   }
 
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testCreateOrder() throws JsonProcessingException, Exception {
 		OrderDto dto = orderDtoList.get(0);
 		
@@ -67,6 +89,7 @@ class OrderControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testGetOrder() throws Exception {
 		OrderDto dto = orderDtoList.get(0);
 		
@@ -80,6 +103,7 @@ class OrderControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"MANAGER"})
 	void testDeleteOrder() throws Exception {
 		Long id = 1L;
 		
@@ -92,6 +116,7 @@ class OrderControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"CLIENT"})
 	void testGetUserOrders() throws Exception {
 		Long id = 1L;
 		
@@ -105,6 +130,7 @@ class OrderControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"MANAGER"})
 	void testUpdateOrder() throws JsonProcessingException, Exception {
 		OrderDto dto = orderDtoList.get(0);
 		

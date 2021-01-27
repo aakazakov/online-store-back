@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,12 +23,17 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.fun.store.backend.configuration.security.RestAuthenticationEntryPoint;
+import dev.fun.store.backend.configuration.security.RestAuthenticationFailureHandler;
+import dev.fun.store.backend.configuration.security.RestAuthenticationSuccessHandler;
+import dev.fun.store.backend.configuration.security.RestHttpStatusReturningLogoutSuccessHandler;
 import dev.fun.store.backend.domain.authority.Auth;
 import dev.fun.store.backend.domain.authority.Role;
 import dev.fun.store.backend.dto.AuthorityDto;
 import dev.fun.store.backend.dto.SetAuthorityDto;
 import dev.fun.store.backend.dto.UserDto;
 import dev.fun.store.backend.service.AuthorityServiceImpl;
+import dev.fun.store.backend.service.UserService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AuthorityController.class)
@@ -41,6 +47,21 @@ class AuthorityControllerTest {
 	
 	@MockBean
 	AuthorityServiceImpl authorityService;
+	
+	@MockBean
+	private UserService userService;
+	
+	@MockBean
+	private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	
+	@MockBean
+	private RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
+	
+	@MockBean
+	private RestAuthenticationFailureHandler restAuthenticationFailureHandler;
+	
+	@MockBean
+	private RestHttpStatusReturningLogoutSuccessHandler restHttpStatusReturningLogoutSuccessHandler;
 	
 	static List<AuthorityDto> authList = new ArrayList<>();
 	static List<UserDto> userList = new ArrayList<>();
@@ -60,7 +81,8 @@ class AuthorityControllerTest {
 	}
 	
 	@Test
-	void testGetAllProducts() throws Exception {
+	@WithMockUser(roles = {"ADMIN"})
+	void testGetAllAuthorities() throws Exception {
 		Mockito.when(authorityService.getAll()).thenReturn(authList);
 		
 		mockMvc
@@ -70,7 +92,8 @@ class AuthorityControllerTest {
 	}
 
 	@Test
-	void testGetProduct() throws Exception {
+	@WithMockUser(roles = {"ADMIN"})
+	void testGetAuthority() throws Exception {
 		AuthorityDto dto = authList.get(0);
 		Long id = dto.getId();
 		
@@ -83,6 +106,7 @@ class AuthorityControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ADMIN"})
 	void testGetUsersByAuthorityId() throws Exception {
 		Long id = 1L;
 		
@@ -95,6 +119,7 @@ class AuthorityControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles = {"ADMIN"})
 	void testGetAllAuthoritiesByUserId() throws Exception {
 		Long id = 1L;
 		List<AuthorityDto> auths = authList.subList(2, 3);
@@ -108,6 +133,7 @@ class AuthorityControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(roles = {"ADMIN"})
 	void testSetAuthorities() throws Exception {
 		SetAuthorityDto dto = new SetAuthorityDto();
 		List<AuthorityDto> authorities = authList.subList(0, 1);
