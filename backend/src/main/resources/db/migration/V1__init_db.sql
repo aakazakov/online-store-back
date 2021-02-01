@@ -1,0 +1,32 @@
+CREATE SEQUENCE IF NOT EXISTS authority_seq START 1 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS basket_seq START 1 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS category_seq START 1 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS order_details_seq START 1 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS order_seq START 1 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS product_seq START 1 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS user_seq START 1 INCREMENT 1;
+
+CREATE TABLE IF NOT EXISTS authorities (id INT8 NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS baskets (id INT8 NOT NULL, user_id INT8 NOT NULL, PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS baskets_products (basket_id INT8 NOT NULL, product_id int8 NOT NULL);
+CREATE TABLE IF NOT EXISTS categories (id INT8 NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS order_details (id INT8 NOT NULL, amount INT4, total_cost INT8, order_id INT8, product_id INT8, PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS orders (id INT8 NOT NULL, created TIMESTAMP, delivery_address VARCHAR(255), status VARCHAR(255), total_cost INT8, updated TIMESTAMP, user_id INT8, PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS products (id INT8 NOT NULL, cost INT8 NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS products_categories (product_id INT8 NOT NULL, category_id INT8 NOT NULL);
+CREATE TABLE IF NOT EXISTS users (id INT8 NOT NULL, enabled BOOLEAN NOT NULL, password VARCHAR(255) NOT NULL, username VARCHAR(255) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE IF NOT EXISTS users_authorities (authority_id INT8 NOT NULL, user_id INT8 NOT NULL);
+
+ALTER TABLE IF EXISTS products_categories ADD CONSTRAINT UKq76m5236wcbvul3k16wngspe7 UNIQUE (product_id, category_id);
+ALTER TABLE IF EXISTS users_authorities ADD CONSTRAINT UKtitvpqk7gla63inv4onq5bf8m UNIQUE (user_id, authority_id);
+ALTER TABLE IF EXISTS baskets ADD CONSTRAINT FK87s17cinc4wkx0taas5nh0s8h FOREIGN KEY (user_id) REFERENCES users;
+ALTER TABLE IF EXISTS baskets_products ADD CONSTRAINT FK81mtboy4cahxvtv86apcin43c foreign key (product_id) REFERENCES products;
+ALTER TABLE IF EXISTS baskets_products ADD CONSTRAINT FKribumfhgwuqeoqhq8gs88smee foreign key (basket_id) REFERENCES baskets;
+ALTER TABLE IF EXISTS order_details ADD CONSTRAINT FKjyu2qbqt8gnvno9oe9j2s2ldk FOREIGN KEY (order_id) REFERENCES orders;
+ALTER TABLE IF EXISTS order_details ADD CONSTRAINT FK4q98utpd73imf4yhttm3w0eax FOREIGN KEY (product_id) REFERENCES products;
+ALTER TABLE IF EXISTS orders ADD CONSTRAINT FK32ql8ubntj5uh44ph9659tiih FOREIGN KEY (user_id) REFERENCES users;
+ALTER TABLE IF EXISTS products_categories ADD CONSTRAINT FKqt6m2o5dly3luqcm00f5t4h2p FOREIGN KEY (category_id) REFERENCES categories;
+ALTER TABLE IF EXISTS products_categories ADD CONSTRAINT FKtj1vdea8qwerbjqie4xldl1el FOREIGN KEY (product_id) REFERENCES products;
+ALTER TABLE IF EXISTS users_authorities ADD CONSTRAINT FKq3lq694rr66e6kpo2h84ad92q FOREIGN KEY (user_id) REFERENCES users;
+ALTER TABLE IF EXISTS users_authorities ADD CONSTRAINT FKdsfxx5g8x8mnxne1fe0yxhjhq FOREIGN KEY (authority_id) REFERENCES authorities;
+

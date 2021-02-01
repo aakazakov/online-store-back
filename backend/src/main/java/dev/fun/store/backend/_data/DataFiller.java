@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
 import dev.fun.store.backend.dao.AuthorityRepository;
 import dev.fun.store.backend.dao.CategoryRepository;
@@ -26,7 +26,7 @@ import dev.fun.store.backend.domain.authority.Role;
  * <p>
  * <i>ps: and don't forget to disable the 'flyway' plugin.<i>
  */
-@Component
+//@Component
 public class DataFiller implements CommandLineRunner {
 	
 	@Autowired
