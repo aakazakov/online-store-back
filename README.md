@@ -1,2 +1,2 @@
 # online-store-back
-Backend part of the online store
+Backend part of an online store
