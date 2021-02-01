@@ -95,7 +95,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 						"/categories/all/product/{id}",
 						"/products/all",
 						"/products/id/{id}",
-						"/products/all/category/{id}"
+						"/products/all/category/{id}",
+						"/permit/is-auth",
+						"/permit/csrf"
 					).hasRole(Role.ANONYMOUS.name())
 			.mvcMatchers(HttpMethod.POST,
 						"/users/add-client",
