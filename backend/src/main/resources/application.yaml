@@ -1,10 +1,10 @@
 ################## LOGGING #################
 
 #debug: true
-logging:
-  level:
+#logging:
+#  level:
 #    '[org.springframework.web]': DEBUG
-    '[org.springframework.security]': DEBUG
+#    '[org.springframework.security]': DEBUG
 #    '[org.hibernate]': WARN
 #    '[org.apache.tomcat]': WARN
 
