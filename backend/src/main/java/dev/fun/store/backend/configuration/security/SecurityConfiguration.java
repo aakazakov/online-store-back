@@ -86,7 +86,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 						"/baskets/id/{id}",
 						"/baskets/user/{id}",
 						"/orders/all/user/{id}",
-						"/orders/id/{id}"
+						"/orders/id/{id}",
+						"/users/current"
 					).hasRole(Role.CLIENT.name())
 			.mvcMatchers(HttpMethod.GET,
 						"/categories/all",

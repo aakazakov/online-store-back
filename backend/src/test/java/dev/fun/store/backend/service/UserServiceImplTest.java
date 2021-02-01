@@ -94,6 +94,18 @@ class UserServiceImplTest {
 		assertNotNull(actual);
 		assertEquals(dto.getUsername(), actual.getUsername());
 	}
+	
+	@Test
+	void testGetByUsername() {
+		User u = userList.get(0);
+		
+		Mockito.when(userRepository.findFirstByUsername(Mockito.anyString())).thenReturn(u);
+		
+		UserDto actual = userService.getByUsername(u.getUsername());
+		
+		assertNotNull(actual);
+		assertEquals(actual.getUsername(), u.getUsername());
+	}
 
 	@Test
 	void testDelete() {

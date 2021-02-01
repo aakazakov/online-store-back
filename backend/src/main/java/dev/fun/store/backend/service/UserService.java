@@ -22,6 +22,13 @@ public interface UserService extends UserDetailsService {
 	List<UserDto> getAll();
 	
 	/**
+	 * Returns the user by name
+	 * @param username
+	 * @return @link UserDto}
+	 */
+	UserDto getByUsername(String username);
+	
+	/**
 	 * Used if need the user to be saved in a repository (e.g. DB) as a client
 	 * @param dto {@link UserDto} data to be saved
 	 * @return saved user as {@link UserDto}

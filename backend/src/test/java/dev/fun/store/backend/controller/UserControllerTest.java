@@ -80,6 +80,20 @@ class UserControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.size()", Matchers.is(userList.size())));
 	}
+	
+	@Test
+	@WithMockUser(username = "user", roles = {"CLIENT"})
+	void testGetCurrentUser() throws Exception {
+		UserDto user = userList.get(0);
+		
+		Mockito.when(userService.getByUsername(Mockito.anyString())).thenReturn(user);
+		
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/users/current")
+					.accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.username", Matchers.is(user.getUsername())));
+	}
 
 	@Test
 	@WithMockUser(roles = {"MANAGER"})

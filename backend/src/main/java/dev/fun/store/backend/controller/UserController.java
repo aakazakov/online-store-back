@@ -1,5 +1,6 @@
 package dev.fun.store.backend.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,14 @@ public class UserController {
 	@Autowired
 	public UserController(UserServiceImpl userService) {
 		this.userService = userService;
+	}
+	
+	@GetMapping("/current")
+	public UserDto getCurrentUser(Principal principal) {
+		if (principal == null) {
+			return null;
+		}
+		return userService.getByUsername(principal.getName());
 	}
 	
 	@GetMapping("/all")

@@ -77,6 +77,11 @@ public class UserServiceImpl implements UserService {
 		
 		return UserMapper.MAPPER.fromUser(userRepository.save(user));
 	}
+	
+	@Override
+	public UserDto getByUsername(String username) {
+		return UserMapper.MAPPER.fromUser(userRepository.findFirstByUsername(username));
+	}
 
 	@Override
 	public void delete(Long id) {
