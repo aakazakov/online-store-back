@@ -106,8 +106,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 					).hasRole(Role.ANONYMOUS.name())
 			.mvcMatchers("/error").hasRole(Role.ANONYMOUS.name())
 			.anyRequest().denyAll();
-  	
-  	http.csrf().disable();
     
     http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
     http.formLogin().successHandler(restAuthenticationSuccessHandler);

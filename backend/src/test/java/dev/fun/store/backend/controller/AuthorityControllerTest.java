@@ -1,6 +1,7 @@
 package dev.fun.store.backend.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,7 +145,7 @@ class AuthorityControllerTest {
 			.perform(MockMvcRequestBuilders.put("/authorities/set")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(dto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8").with(csrf().asHeader()))
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)));
 	}

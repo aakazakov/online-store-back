@@ -1,6 +1,7 @@
 package dev.fun.store.backend.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -114,7 +115,8 @@ class ProductControllerTest {
 			.perform(MockMvcRequestBuilders.post("/products/add")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(p6))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
       .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(6)));
 	}
@@ -131,7 +133,8 @@ class ProductControllerTest {
 			.perform(MockMvcRequestBuilders.put("/products/update")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(dto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.cost", Matchers.is(999)));
@@ -144,7 +147,8 @@ class ProductControllerTest {
 		
 		mockMvc
 			.perform(MockMvcRequestBuilders.delete("/products/delete/{id}", id)
-					.accept(MediaType.APPLICATION_JSON_VALUE))
+					.accept(MediaType.APPLICATION_JSON_VALUE)
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk());
 		
 		verify(productService).delete(id);

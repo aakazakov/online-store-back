@@ -1,6 +1,7 @@
 package dev.fun.store.backend.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -108,7 +109,8 @@ class CategoryControllerTest {
 			.perform(MockMvcRequestBuilders.post("/categories/add")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(c4))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
       .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(4)));
 	}
@@ -126,7 +128,8 @@ class CategoryControllerTest {
 			.perform(MockMvcRequestBuilders.put("/categories/update")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(dto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is(dto.getTitle())));
@@ -139,7 +142,8 @@ class CategoryControllerTest {
 		
 		mockMvc
 			.perform(MockMvcRequestBuilders.delete("/categories/delete/{id}", id)
-					.accept(MediaType.APPLICATION_JSON_VALUE))
+					.accept(MediaType.APPLICATION_JSON_VALUE)
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk());
 		
 		verify(categoryService).delete(id);

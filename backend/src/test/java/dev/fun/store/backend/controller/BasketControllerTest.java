@@ -1,6 +1,7 @@
 package dev.fun.store.backend.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
@@ -116,7 +117,8 @@ class BasketControllerTest {
 			.perform(MockMvcRequestBuilders.post("/baskets/create")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(inputBasketDto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));
 	}
@@ -150,7 +152,8 @@ class BasketControllerTest {
 		
 		mockMvc
 			.perform(MockMvcRequestBuilders.delete("/baskets/delete/{id}", id)
-					.accept(MediaType.APPLICATION_JSON_VALUE))
+					.accept(MediaType.APPLICATION_JSON_VALUE)
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk());
 		
 		verify(basketService).deleteBasket(id);
@@ -165,7 +168,8 @@ class BasketControllerTest {
 		.perform(MockMvcRequestBuilders.put("/baskets/add-products")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.content(objectMapper.writeValueAsString(inputBasketDto))
-				.characterEncoding("utf-8"))
+				.characterEncoding("utf-8")
+				.with(csrf().asHeader()))
 		.andExpect(status().isOk())
     .andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));		
 	}
@@ -179,7 +183,8 @@ class BasketControllerTest {
 		.perform(MockMvcRequestBuilders.put("/baskets/remove-products")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.content(objectMapper.writeValueAsString(inputBasketDto))
-				.characterEncoding("utf-8"))
+				.characterEncoding("utf-8")
+				.with(csrf().asHeader()))
 		.andExpect(status().isOk())
     .andExpect(MockMvcResultMatchers.jsonPath("$.basketId", Matchers.is(1)));		
 	}

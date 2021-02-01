@@ -60,9 +60,14 @@ class PermissionControllerTest {
 		  .andExpect(MockMvcResultMatchers.jsonPath("$.auth", Matchers.is(true))); 		
 	}
 
-//	@Test
-//	void testCsrf() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	@WithMockUser(roles = {"CLIENT"})
+	void testCsrf() throws Exception {
+		mockMvc
+			.perform(MockMvcRequestBuilders.get("/permit/csrf")
+					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.characterEncoding("utf-8"))
+			.andExpect(status().isOk());
+	}
 
 }

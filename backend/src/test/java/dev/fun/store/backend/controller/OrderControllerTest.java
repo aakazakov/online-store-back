@@ -1,6 +1,7 @@
 package dev.fun.store.backend.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -83,7 +84,8 @@ class OrderControllerTest {
 			.perform(MockMvcRequestBuilders.post("/orders/create")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(dto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
 		  .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
@@ -109,7 +111,8 @@ class OrderControllerTest {
 		
 		mockMvc
 			.perform(MockMvcRequestBuilders.delete("/orders/delete/{id}", id)
-					.accept(MediaType.APPLICATION_JSON_VALUE))
+					.accept(MediaType.APPLICATION_JSON_VALUE)
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk());
 		
 		verify(orderService).deleteOrder(id);
@@ -140,7 +143,8 @@ class OrderControllerTest {
 			.perform(MockMvcRequestBuilders.put("/orders/update")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(dto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
 		  .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}

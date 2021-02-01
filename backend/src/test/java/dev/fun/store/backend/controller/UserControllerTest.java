@@ -1,6 +1,7 @@
 package dev.fun.store.backend.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -121,7 +122,8 @@ class UserControllerTest {
 			.perform(MockMvcRequestBuilders.post("/users/add-client")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(dto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)));
 	}
@@ -139,7 +141,8 @@ class UserControllerTest {
 			.perform(MockMvcRequestBuilders.put("/users/update")
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 					.content(objectMapper.writeValueAsString(dto))
-					.characterEncoding("utf-8"))
+					.characterEncoding("utf-8")
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk())
 	    .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.username", Matchers.is(dto.getUsername())));
@@ -152,7 +155,8 @@ class UserControllerTest {
 		
 		mockMvc
 			.perform(MockMvcRequestBuilders.delete("/users/delete/{id}", id)
-					.accept(MediaType.APPLICATION_JSON_VALUE))
+					.accept(MediaType.APPLICATION_JSON_VALUE)
+					.with(csrf().asHeader()))
 			.andExpect(status().isOk());
 		
 		verify(userService).delete(id);
